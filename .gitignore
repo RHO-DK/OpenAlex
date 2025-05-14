@@ -13,6 +13,8 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+openalex/
+
 
 # Miljøfiler / secrets
 .env
@@ -30,6 +32,11 @@ dist/
 MANIFEST
 wheels/
 share/python-wheels/
+
+
+# Temp- eller udviklingsfiler
+sandbox/
+
 
 # Test / coverage
 .coverage
@@ -56,3 +63,14 @@ ipython_config.py
 .pyre/
 .dmypy.json
 dmypy.json
+
+# Visualiseringsfiler
+*.pbix      #PowerBi
+*.twb       #TAbleu
+*.twbx      #Tableau
+*.rds       # R
+*.xlsx      #excel
+*.xlsm
+*.html      #rmd eller notebook (rendered)
+*.pdf       
+

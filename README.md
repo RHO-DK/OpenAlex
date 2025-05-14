@@ -15,14 +15,16 @@ Dette projekt demonstrerer struktureret databehandling, analyse og præsentation
 - `logs/`: Logfiler fra automatiseret datakørsel
 
 ## Output
+Levere output via flere værktøjer, for at vise overførbarhed af kompetencer
+
 - 📊 Interaktive dashboards:
   - Python (Dash)
   - R (Shiny)
+  - Microsoft Power BI
 
 - 📝 Statisk rapport:
   - `report.ipynb`: Python-baseret rapport i notebook-format
   - `report.Rmd`: R-baseret rapport i markdown-format
   - Fokus på trends, netværk og beslutningsrelevante indsigter
-
 
 
