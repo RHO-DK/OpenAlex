@@ -1,0 +1,58 @@
+# macOS
+.DS_Store
+
+# Python / cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtuelle miljøer
+.venv/
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Miljøfiler / secrets
+.env
+
+# Logs
+*.log
+logs/
+
+# Build / dist
+build/
+dist/
+.eggs/
+*.egg-info/
+*.egg
+MANIFEST
+wheels/
+share/python-wheels/
+
+# Test / coverage
+.coverage
+.coverage.*
+.cache
+.pytest_cache/
+.nox/
+.tox/
+.hypothesis/
+
+# IDE config
+.vscode/
+.idea/
+
+# Jupyter / IPython
+.ipynb_checkpoints
+profile_default/
+ipython_config.py
+
+# Static analysis
+.mypy_cache/
+.ruff_cache/
+.pytype/
+.pyre/
+.dmypy.json
+dmypy.json
