@@ -10,9 +10,9 @@ Dette projekt demonstrerer struktureret databehandling, analyse og præsentation
 - Modulær opbygning med mulighed for dashboard eller videreanvendelse
 
 ## Struktur
-- `src/`: Scripts til ETL og databasehåndtering
-- `notebooks/`: Udforskende analyser og visualisering
-- `logs/`: Logfiler fra automatiseret datakørsel
+- 'src/': Scripts til ETL og databasehåndtering
+- 'notebooks/': Udforskende analyser og visualisering
+- 'logs/: Logfiler fra automatiseret datakørsel
 
 ## Output
 Levere output via flere værktøjer, for at vise overførbarhed af kompetencer
@@ -23,8 +23,8 @@ Levere output via flere værktøjer, for at vise overførbarhed af kompetencer
   - Microsoft Power BI
 
 - 📝 Statisk rapport:
-  - `report.ipynb`: Python-baseret rapport i notebook-format
-  - `report.Rmd`: R-baseret rapport i markdown-format
+  - 'report.ipynb': Python-baseret rapport i notebook-format
+  - 'report.Rmd': R-baseret rapport i markdown-format
   - Fokus på trends, netværk og beslutningsrelevante indsigter
 
 

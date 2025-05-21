@@ -1,6 +1,6 @@
 ## API-Overblik 
 
-** OpenAlex **
+**OpenAlex**
 
 - Begyndte med at hente data via Postman - få insigt i OpenAlex før konkret indhentning
     - prøvesøgning: https://api.openalex.org/works?filter=authorships.institutions.country_code:DK&group_by=concepts.id - works, fra danmark, grupperet på emner, giver indsigt i hvilke emner der udgives under i DK
@@ -15,12 +15,12 @@
 
 
 
-** ORCID **
+**ORCID**
  - giver mulighed for at analysere på forfatter via unikt ID:
   https://info.orcid.org/documentation/ - orcid api - dok.
 
 
-** ROR ** 
+**ROR** 
  - ORCID skal kombineres med ROR - research identification registry - for geodata:
   https://ror.readme.io/docs/basics
 
@@ -39,7 +39,7 @@ ROR
 
 
 ## Datamodel og database
-** for detaljer se db_structure.md **
+**for detaljer se db_structure.md**
 
 
 
