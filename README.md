@@ -15,7 +15,7 @@ Dette projekt demonstrerer struktureret databehandling, analyse og præsentation
 - 'logs/: Logfiler fra automatiseret datakørsel
 
 ## Output
-Levere output via flere værktøjer, for at vise overførbarhed af kompetencer
+Levere output via flere værktøjer, for at vise overførbarhed af kompetencer - forskellighed relateret til såvel teknologi, som til hvilke beslutninger der kan understøttes - usecases
 
 - 📊 Interaktive dashboards:
   - Python (Dash)
