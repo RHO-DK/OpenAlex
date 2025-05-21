@@ -1,7 +1,10 @@
-## API-Overblik Generelt
+## API-Overblik 
+
+** OpenAlex **
 
 - Begyndte med at hente data via Postman - få insigt i OpenAlex før konkret indhentning
     - prøvesøgning: https://api.openalex.org/works?filter=authorships.institutions.country_code:DK&group_by=concepts.id - works, fra danmark, grupperet på emner, giver indsigt i hvilke emner der udgives under i DK
+    - mere konkret  - forstå OpenAlex' datastruktur - til at forme præcise requests: https://api.openalex.org/works?filter=from_publication_date:2020-01-01&per-page=1 
 - Hentning baseret på OpenAlex dokumentation:
     https://docs.openalex.org/
 
@@ -12,16 +15,19 @@
 
 
 
-- ORCID - giver mulighed for at analysere på forfatter via unikt ID:
+** ORCID **
+ - giver mulighed for at analysere på forfatter via unikt ID:
   https://info.orcid.org/documentation/ - orcid api - dok.
 
 
-- ROR: ORCID skal kombineres med ROR - research identification registry - for geodata:
+** ROR ** 
+ - ORCID skal kombineres med ROR - research identification registry - for geodata:
   https://ror.readme.io/docs/basics
 
 
 
 ## Filtrering og datavalg
+
 OpenAlex:
 
 
@@ -56,7 +62,7 @@ ROR
 ### R
 **Formål:** Bibliometrisk analyse – faglig aktivitet og udvikling
 **Datakilder:** 
-- OpenAlex: `concepts,`works, citations, institutions
+- OpenAlex: `concepts,`works, authors, citations, institutions
 
 
 ### Python
