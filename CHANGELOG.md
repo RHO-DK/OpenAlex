@@ -7,6 +7,12 @@ Tilføjes med logikken: MAJOR.MINOR.PATCH (1.1.1), og dertil dato for ændring.
 
 ## [0.4.0] – 2025-05-22
 
+### Normalisering af topics-tabellen
+ - Redundante felter subfield_name, field_name og domain_name er fjernet fra topics-tabel. 
+ - Names skal nu hentes med JOIN med hhv subfields- , fields- og domains-tabeller
+ - Hensigt: sikre emnehieriarkiet og reducere risiko for datadivergens.
+
+
 ### Tilføjet simple PowerBI og Shiny usecases i NOTES.md
 - Tjekket db struktur vha simple usecases relevant for OpenAlex data
 - Usecases er unikt tilpasset kodningskontekst/visualiseringsredskab

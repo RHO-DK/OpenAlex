@@ -89,7 +89,7 @@ def create_tables():
         author_id TEXT,
         institution_id TEXT,
         author_position TEXT, 
-        is_corresponding BOOLEAN
+        is_corresponding BOOLEAN,
         PRIMARY KEY (work_id, author_id),
         FOREIGN KEY (work_id) REFERENCES works(work_id),
         FOREIGN KEY (author_id) REFERENCES authors(author_id),
@@ -151,6 +151,10 @@ def create_tables():
     else:
         logging.error("Tabel authors ikke oprettet")
         
+    cur.execute("CREATE INDEX IF NOT EXISTS idx_authors_name ON authors (name);")
+    cur.execute("CREATE INDEX IF NOT EXISTS idx_authors_orcid ON authors(orcid);")
+    
+    conn.commit()
         
         
     #---topics
@@ -158,16 +162,12 @@ def create_tables():
     logging.info("Opretter topics")
 
     cur.execute("""
-    CREATE TABLE IF NOT EXISTS topics (
+        CREATE TABLE IF NOT EXISTS topics (
         topic_id TEXT PRIMARY KEY,
         display_name TEXT,
         subfield_id TEXT,
-        subfield_name TEXT,
         field_id TEXT,
-        field_name TEXT,
-        domain_id TEXT,
-        domain_name TEXT,
-        FOREIGN KEY (subfield_id) REFERENCES subfields(subfield_id)
+        domain_id TEXT
       
     );
     """)
@@ -191,6 +191,7 @@ def create_tables():
     cur.execute("CREATE INDEX IF NOT EXISTS idx_topics_subfield_id ON topics (subfield_id);")
     cur.execute("CREATE INDEX IF NOT EXISTS idx_topics_field_id ON topics (field_id);")
     cur.execute("CREATE INDEX IF NOT EXISTS idx_topics_domain_id ON topics (domain_id);")
+    cur.execute("CREATE INDEX IF NOT EXISTS idx_topics_display_name ON topics (display_name);")
     
     conn.commit()
         
@@ -234,7 +235,7 @@ def create_tables():
     CREATE TABLE IF NOT EXISTS fields (
         field_id TEXT PRIMARY KEY,
         field_name TEXT,
-        domain_id TEXT FOREIGN KEY
+        domain_id TEXT
     );
     """)
 
@@ -254,7 +255,11 @@ def create_tables():
     else:
         logging.error("Tabel fields ikke oprettet")
         
-
+            
+    cur.execute("CREATE INDEX IF NOT EXISTS idx_fields_domain_id ON fields (domain_id);")
+    
+    conn.commit()
+        
 
   #---subfields
     
@@ -264,7 +269,7 @@ def create_tables():
     CREATE TABLE IF NOT EXISTS subfields (
         subfield_id TEXT PRIMARY KEY,
         subfield_name TEXT,
-        field_id TEXT FOREIGN KEY
+        field_id TEXT
     );
     """)
 
@@ -284,7 +289,12 @@ def create_tables():
     else:
         logging.error("Tabel subfields ikke oprettet")
         
-
+            
+    cur.execute("CREATE INDEX IF NOT EXISTS idx_subfields_field_id ON subfields (field_id);")
+    
+    conn.commit()
+        
+    
      
     #---work_topics
     
@@ -292,13 +302,16 @@ def create_tables():
 
     cur.execute("""
     CREATE TABLE IF NOT EXISTS work_topics (
-        work_id TEXT FOREIGN KEY,
-        topic_id TEXT FOREIGN KEY,
+        work_id TEXT,
+        topic_id TEXT,
         score FLOAT,
         is_primary BOOLEAN
+        PRIMARY KEY (work_id, topic_id),
+        FOREIGN KEY (work_id) references works(work_id),
+        FOREIGN KEY (topic_id) references topics(topic_id)
     );
     """)
-
+      
     conn.commit()
 
     # log check
@@ -315,7 +328,13 @@ def create_tables():
     else:
         logging.error("Tabel work_topics ikke oprettet")
         
-      
+          
+    cur.execute("CREATE INDEX IF NOT EXISTS idx_work_topics_work_id ON work_topics (work_id);")
+    cur.execute("CREATE INDEX IF NOT EXISTS idx_work_topics_topic_id ON work_topics (topic_id);")
+
+    conn.commit()
+        
+
              
     #---concepts
     
@@ -355,10 +374,10 @@ def create_tables():
 
     cur.execute("""
     CREATE TABLE IF NOT EXISTS work_concepts (
-        work_id TEXT FOREIGN KEY,
-        concept_id TEXT FOREIGN KEY,
+        work_id TEXT,
+        concept_id TEXT,
         score FLOAT,
-       
+        PRIMARY KEY (work_id, concept_id)
     );
     """)
 
@@ -378,8 +397,11 @@ def create_tables():
     else:
         logging.error("Tabel work_concepts ikke oprettet")
         
+    cur.execute("CREATE INDEX IF NOT EXISTS idx_work_concepts_work_id ON work_concepts (work_id);")
+    cur.execute("CREATE INDEX IF NOT EXISTS idx_work_concepts_concept_id ON work_concepts (concept_id);")
 
-
+    conn.commit()
+        
 
     #---institutions
     
@@ -411,6 +433,11 @@ def create_tables():
         logging.info("Tabel institutions oprettet")
     else:
         logging.error("Tabel institutions ikke oprettet")
+        
+        
+    cur.execute("CREATE INDEX IF NOT EXISTS idx_institutions_ror ON institutions (ror);")
+
+    conn.commit()
         
 
 
