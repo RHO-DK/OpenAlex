@@ -4,6 +4,11 @@
  - Inklusionskriterie: authorship-liste > 0
  - 'concepts' depracated i OpenAlex: https://docs.openalex.org/api-entities/concepts - derfor også 'topics'
  - generelt hentes id og serials osv uden url præfix
+
+ **opgaver efter parsing:**
+  -Fremmednøgler mellem topics, subfields, fields, og domains er midlertidigt udeladt ved oprettelse. De tilføjes efter parsing og datavalidering for at sikre hierarkisk integritet.
+
+  domains ← fields ← subfields ← topics
  
 ***
 

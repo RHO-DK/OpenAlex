@@ -29,7 +29,6 @@ Levere output via flere værktøjer, for at vise overførbarhed af kompetencer -
 
 
   ## Miljø
-
 - Python-version: 3.9.6  
 - Virtuelt miljø: venv ('python3 -m venv openalex')
 - Pakkehåndtering: pip  

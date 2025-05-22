@@ -1,4 +1,4 @@
-## API-Overblik 
+## API-Overblik database indhold og tests
 
 **OpenAlex**
 
@@ -8,10 +8,26 @@
 - Hentning baseret på OpenAlex dokumentation:
     https://docs.openalex.org/
 
-  ### Hentning konkrete elementer:
-    - cursor paging, relevant for at udtømme forespørgsler
+### Hentning konkrete elementer:
+   - cursor paging, relevant for at udtømme forespørgsler
+   - enhedstyper: Works, Authors, Sources, Institutions, Concepts (legacy), Topics, (Publishers, Funders)
 
-    - enhedstyper: Works, Authors, Sources, Institutions, Concepts, Publishers, Funders
+### Tests
+
+   - 25.5.22: en **test**hentning giver problemer: urllib3 advarer om manglende OpenSSL-kompatibilitet (LibreSSL 2.8.3). dog ingen praktiske problemer bemærket
+
+**Test af fejllogning i fetch_works()** sandbox/testLoggingFetch.py
+
+- Simuleret 'ValueError' manuelt for at sikre, at 'except' fanger ukendte fejl
+- Testet forkert endpoint for at udløse HTTP-fejl (404)
+- Testet lav 'timeout' for at udløse 'TimeoutError'
+- Bekræftet:
+  - Logging sker korrekt i logs/test.log
+  - Kort INFO-logging ved succesfuldt kald.
+  - Detaljeret fejllogging ved exceptions.
+  - 'RotatingFileHandler' fungerer – log overskrives ikke men fortsættes
+
+Status: Logging fungerer som ønsket.
 
 
 
@@ -26,7 +42,7 @@
 
 ---
 
-## OpenAlex
+## OpenAlex data
 
 ### Citationer og begrænsninger
 
@@ -42,12 +58,12 @@ Evt kan selektive udvidelser tilføjes på sigt - fx. mest citerede værker.
 
 ---
 
-### ORCID:
+## ORCID data:
 
 ---
 
 
-### ROR
+## ROR data
 
 ---
 
@@ -56,7 +72,7 @@ Evt kan selektive udvidelser tilføjes på sigt - fx. mest citerede værker.
 
 ---
 
-## Analyseovervejelser
+## Analyseovervejelser og usecases
 
 
 1. Systematiske krydstjek og anden kvalitetssikring af data – herunder særligt på tværs af datakilder – for at vurdere validitet og sammenhæng.
