@@ -5,7 +5,7 @@
  - 'concepts' depracated i OpenAlex: https://docs.openalex.org/api-entities/concepts - derfor også 'topics'
  - generelt hentes id og serials osv uden url præfix
  
-
+***
 
 ### authorships 
 
@@ -21,7 +21,7 @@ Bemærk også primærnøgle:  (work_id, author_id)
 | author_position  | TEXT     | Position i forfatterrækkefølgen: 'first', 'middle', 'last'      |
 | is_corresponding | BOOLEAN  | 'true' hvis kontaktperson på work_id                            |
 
-
+***
 
 ### authors 
 
@@ -35,8 +35,7 @@ Bemærk også primærnøgle:  (work_id, author_id)
 | name        | TEXT     | Navn ('display_name' fra OpenAlex)                    |
 | orcid       | TEXT     | ORCID ID (format:'0000-0000-0000-0000', uden præfix)  |
 
-
-
+***
 
 ### works 
 
@@ -62,7 +61,7 @@ Bemærk også primærnøgle:  (work_id, author_id)
 | host_venue_ror     | TEXT     | ROR-ID for udgiverinstitution (kan være NULL)                   |
 | created_date       | DATE     | Hvornår værk registreret i OpenAlex                             |
 
-
+***
 
 ### topics
   - er organiseret hierarkisk:
@@ -89,6 +88,7 @@ Bemærk også primærnøgle:  (work_id, author_id)
 | domain_name   | TEXT | Navn på domæne, fx 'Health Sciences'                                                           |
 
 
+***
 
 ### domains
 
@@ -99,6 +99,7 @@ Bemærk også primærnøgle:  (work_id, author_id)
 | domain_id    | TEXT | Primærnøgle – ID for domæne (format: '0', uden præfix)    |
 | domain_name  | TEXT | Navn på domæne, fx 'Health Sciences'                      |
 
+***
 
 ### fields
 
@@ -111,6 +112,7 @@ Bemærk også primærnøgle:  (work_id, author_id)
 | field_name  | TEXT | Navn på felt, fx 'Medicine'                             |
 | domain_id   | TEXT | Fremmednøgle til 'domains.domain_id'                    |
 
+***
 
 ### subfields 
 
@@ -122,6 +124,7 @@ Bemærk også primærnøgle:  (work_id, author_id)
 | subfield_name | TEXT | Navn på subfield, fx 'Oncology'                             |
 | field_id      | TEXT | Fremmednøgle til 'fields.field_id'                          |
 
+***
 
 ### work_topics
 
@@ -138,7 +141,7 @@ Bemærk også primærnøgle:  (work_id, topic_id)
 | score       | FLOAT   | Relevans af topic for værket, OpenAlex system, AI baseret                    |
 | is_primary  | BOOLEAN | true hvis topic er værkets 'primary_topic'                                   |
 
-
+***
 
 ### concepts
 **NB concepts udfases til fordel for topics**
@@ -150,9 +153,9 @@ Bemærk også primærnøgle:  (work_id, topic_id)
 | concept_id     | TEXT    | Primærnøgle – ID for concept (format: 'C0000000', uden præfix)            |
 | display_name   | TEXT    | Navn på emne, fx 'Cancer'                                                 |
 | level          | INTEGER | Hierarkisk: 0 (domæne), 1 (felt), 2 (subfelt), 3 (detaljeret emne)        |
-| wikidata_id    | TEXT    | Wikidata-ID (format: 'Q00000', uden præfix)                                  |
+| wikidata_id    | TEXT    | Wikidata-ID (format: 'Q00000', uden præfix)                               |
 
-
+***
 
 **work_concepts relationsstabel** 
 
@@ -164,3 +167,5 @@ Bemærk også primærnøgle: (work_id, concept_id)
 | work_id       | TEXT  | Fremmednøgle til 'works.work_id'                        |
 | concept_id    | TEXT  | Fremmednøgle til 'concepts.concept_id'                  |
 | score         | FLOAT | Relevans af concept for værket, OpenAlex score          |
+
+***
