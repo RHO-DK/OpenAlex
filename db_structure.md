@@ -88,9 +88,7 @@ Bemærk også primærnøgle:  (work_id, author_id)
 | domain_name   | TEXT | Navn på domæne, fx 'Health Sciences'                                                           |
 
 
-***
-
-### domains
+---
 
 **domains entitetstabel** 
 
@@ -99,9 +97,8 @@ Bemærk også primærnøgle:  (work_id, author_id)
 | domain_id    | TEXT | Primærnøgle – ID for domæne (format: '0', uden præfix)    |
 | domain_name  | TEXT | Navn på domæne, fx 'Health Sciences'                      |
 
-***
 
-### fields
+---
 
 **fields entitetstabel** 
 
@@ -112,9 +109,8 @@ Bemærk også primærnøgle:  (work_id, author_id)
 | field_name  | TEXT | Navn på felt, fx 'Medicine'                             |
 | domain_id   | TEXT | Fremmednøgle til 'domains.domain_id'                    |
 
-***
 
-### subfields 
+---
 
 **subfields entititestabel** 
 
@@ -123,6 +119,7 @@ Bemærk også primærnøgle:  (work_id, author_id)
 | subfield_id   | TEXT | Primærnøgle – ID for subfield (format: '0000', uden præfix) |
 | subfield_name | TEXT | Navn på subfield, fx 'Oncology'                             |
 | field_id      | TEXT | Fremmednøgle til 'fields.field_id'                          |
+
 
 ***
 
@@ -141,10 +138,11 @@ Bemærk også primærnøgle:  (work_id, topic_id)
 | score       | FLOAT   | Relevans af topic for værket, OpenAlex system, AI baseret                    |
 | is_primary  | BOOLEAN | true hvis topic er værkets 'primary_topic'                                   |
 
+
 ***
 
 ### concepts
-**NB concepts udfases til fordel for topics**
+**NB: LEGACY - concepts udfases til fordel for topics**
 
  **concepts entitetstabel** 
 
@@ -155,7 +153,8 @@ Bemærk også primærnøgle:  (work_id, topic_id)
 | level          | INTEGER | Hierarkisk: 0 (domæne), 1 (felt), 2 (subfelt), 3 (detaljeret emne)        |
 | wikidata_id    | TEXT    | Wikidata-ID (format: 'Q00000', uden præfix)                               |
 
-***
+
+---
 
 **work_concepts relationsstabel** 
 
@@ -168,4 +167,33 @@ Bemærk også primærnøgle: (work_id, concept_id)
 | concept_id    | TEXT  | Fremmednøgle til 'concepts.concept_id'                  |
 | score         | FLOAT | Relevans af concept for værket, OpenAlex score          |
 
+
 ***
+
+### institutions
+
+**institutions entititestabel** 
+
+| Kolonnenavn      | Type | Beskrivelse                                                                            |
+| ---------------- | ---- | -------------------------------------------------------------------------------------- |
+| institution_id   | TEXT | Primærnøgle – ID for institution (format: 'I00000000', uden præfix)                    |
+| display_name     | TEXT | Navn på institution, fx 'University of British Columbia'                               |
+| ror              | TEXT | ID for ROR (format: fx '03yrm5c26' uden præfix) - institutionelle metadata via ROR API |
+| type             | TEXT | Institutionstype, fx. 'government', 'nonprofit' etc.                                   |
+| country_code     | TEXT | Landekode, fx. 'AU', 'USA' etc.                                                        |
+
+
+***
+
+### citations
+
+**citations relationstabel**
+
+**NB: Relation mellem to værker – vises ved citation** 
+Bemærk også primærnøgle: (citing_work_id, cited_work_id)
+
+| Kolonnenavn      | Type   | Beskrivelse                                                     |
+|------------------|--------|-----------------------------------------------------------------|
+| citing_work_id | TEXT | ID for værk der laver citatet – OpenAlex ID (format: 'W0000000000') |
+| cited_work_id  | TEXT | ID for citeret værk – OpenAlex ID (format: 'W0000000000')           |
+

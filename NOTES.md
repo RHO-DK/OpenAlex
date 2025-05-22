@@ -24,24 +24,37 @@
  - ORCID skal kombineres med ROR - research identification registry - for geodata:
   https://ror.readme.io/docs/basics
 
+---
+
+## OpenAlex
+
+### Citationer og begrænsninger
+
+I det nuværende setup hentes kun danske værker, hvilket betyder:
+
+- Langt størstedelen af de citerede værker ('cited_work_id') findes ikke som fulde dataposter i databasen
+- Der kan ikke hentes institutions- eller emnedata for citerede værker uden yderligere kald til OpenAlex API
+- Derfor er det vigtigt at understrege: 
+    Analysen kan **ikke** anvendes til at vurdere bias i citationsmønstre mellem dansk og international forskning.
+    En overvægt af "udenlandske citationer" afspejler umiddelbart mønster af global forskningsproduktion, og ikke en forskningspolitisk realitet.
+
+Evt kan selektive udvidelser tilføjes på sigt - fx. mest citerede værker.
+
+---
+
+### ORCID:
+
+---
 
 
-## Filtrering og datavalg
+### ROR
 
-OpenAlex:
-
-
-
-ORCID:
-
-ROR
-
-
+---
 
 ## Datamodel og database
 **for detaljer se db_structure.md**
 
-
+---
 
 ## Analyseovervejelser
 
@@ -51,26 +64,92 @@ ROR
 3. Bibliometrisk analyse i R – visualisering af faglig udvikling, citationer og aktivitetsniveau over tid – evt. koblet til centrale hændelser (fx større reformer, policies/overordnede beslutninger, internationale begivenheder).
 4. Netværksanalyse i Python – dybere undersøgelse af samarbejdsrelationer baseret på fund fra R-analysen (emnevalg afledt af mønstre i aktivitet).
 
-
+---
 
 ### Power BI
 **Formål:** KPI-orienteret overblik og grundlæggende indsigt
 **Datakilder:**
-- OpenAlex: `concepts, works, grants, institutions
+- OpenAlex: topics, works, grants, institutions
 
+#### narrativ usecase
+
+**Institutionsaktivitet i dansk forskning**
+
+Narrativ:
+“En beslutningstager i en dansk forskningsinstitution ønsker overblik over institutionens publikationsaktivitet og udvikling i relation til bestemte emner og adgangsformer. 
+
+Jeg forbereder et visuelt overblik over udvikling i tid, fordelt på institutioner, (afgrænsende) emner og åben adgang til (type af) udgivelser."
+
+
+Datakrav - med henvisning til db-table:
+- works (publication_year, is_oa, oa_status, evt. license, evt. type)
+- topics (field eller sub_field)
+    -evt. filtrering via topics.subfield_name, fx 'Artificial Intelligence'.
+- evt. concepts - samme fokus som ovenfor
+- institutions (name og type)
+- authorships (for institutions)
+
+
+Spørgsmål:
+ - Hvilke institutioner publicerer mest inden for eksempelvis "AI" og kan evt. sammenlignes med andre emner, der måske er mindre aktuelle?
+ - Hvor mange af institutionernes artikler indenfor emnet er open access/type af access?
+ - Hvordan ser udviklingen ud over tid, varierer leadership fx?
+
+
+Output:
+- Tidsserier (linje- og søjlediagrammer) med antal publikationer fordelt på emner og OA-status
+- Overlagte diagrammer der sammenligner udvalgte institutioner over tid og emner.
+
+
+---
 
 ### R
 **Formål:** Bibliometrisk analyse – faglig aktivitet og udvikling
 **Datakilder:** 
-- OpenAlex: `concepts,`works, authors, citations, institutions
+- OpenAlex: topics, works, authors, citations, institutions
+
+
+#### narrativ usecase
+
+**Forskersynlighed og faglig udvikling over tid - DK**
+
+Narrativ:
+“Jeg vil analysere danske forskeres aktivitet og synlighed over de seneste 10 år. Jeg vil kende til omfang af både publikationer og citationer, fordelt på fagområder. Jeg har særligt interesse i om særlige emner vinder frem, om der er områder der overses, eller måske endog stagnerer."
+
+
+Datakrav – med henvisning til db-tabeller:
+ - works (publication_year, cited_by_count, type)
+ - topics (subfield_name, field_name, domain_name).
+    - evt filtreres via topics.subfield_name, fx. Artifical Intelligence
+ -  authorships og institutions (for institutionsnavne og typer)
+
+
+Spørgsmål:
+ - hvilke subfields vokser hurtigt målt i antal publikationer
+ - emner med høj citationsvækst (både samlet og pr. publikation)
+ - Skift over tid - i publikationstyper
+ - Er der skift i forskningsfokus over tid – målt som percentilbaseret vækst i citationer inden for subfields
+
+
+Output:
+- Tidsserier - interaktive linje og søjlediagrammer - sortering på emne
+- heatmaps der viser aktivitet og citationer - sortering på subfield+år
+- percentil vækst i citationer baseret på subfield+år 
+- (Evt.) Overblik over mest citerede danske authors sorteret på institution
+
 
 
 ### Python
 **Formål:** Netværksanalyse – samarbejdsmønstre og strukturelle sammenhænge
 **Datakilder:**
-- OpenAlex: `works, authors, institutions - in different particular concepts
+- OpenAlex: works, authors, institutions - in different particular concepts
 - ORCID: forfatterkarriere, positioner
 - ROR: instituitionsmetadata, geografi
+
+
+#### narrativ usecase 
+
+
 
 
 

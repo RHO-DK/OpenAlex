@@ -2,7 +2,21 @@
 
 Tilføjes med logikken: MAJOR.MINOR.PATCH (1.1.1), og dertil dato for ændring. 
 
+---
 
+
+## [0.4.0] – 2025-05-22
+
+### Tilføjet simple PowerBI og Shiny usecases i NOTES.md
+- Tjekket db struktur vha simple usecases relevant for OpenAlex data
+- Usecases er unikt tilpasset kodningskontekst/visualiseringsredskab
+
+### Ændret 'db_structure.md'
+- dokumenteret `institutions`og `citations`tabeller
+
+### Tilføjet 'CHANGELOG.md'
+- indført logging som fast struktur
+- ført tilbagedateret log (nedenfor) via løbende versionskontrol
 
 ---
 
