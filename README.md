@@ -28,3 +28,12 @@ Levere output via flere værktøjer, for at vise overførbarhed af kompetencer -
   - Fokus på trends, netværk og beslutningsrelevante indsigter
 
 
+  ## Miljø
+
+- Python-version: 3.9.6  
+- Virtuelt miljø: venv ('python3 -m venv openalex')
+- Pakkehåndtering: pip  
+- Krav: se 'requirements.txt'
+
+
+

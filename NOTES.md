@@ -148,7 +148,7 @@ Output:
 
 
 #### narrativ usecase 
-
+Nb - afventer integration med orcid og ror data 
 
 
 
