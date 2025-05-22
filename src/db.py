@@ -38,7 +38,7 @@ def create_tables():
     cur.execute("""
     CREATE TABLE IF NOT EXISTS works (
         work_id TEXT PRIMARY KEY,
-        doi TEXT,
+        doi TEXT UNIQUE,
         title TEXT,
         publication_date DATE,
         publication_year INTEGER,
@@ -131,7 +131,7 @@ def create_tables():
     CREATE TABLE IF NOT EXISTS authors (
         author_id TEXT PRIMARY KEY,
         name TEXT,
-        orcid TEXT
+        orcid TEXT UNIQUE
     );
     """)
 
@@ -305,7 +305,7 @@ def create_tables():
         work_id TEXT,
         topic_id TEXT,
         score FLOAT,
-        is_primary BOOLEAN
+        is_primary BOOLEAN,
         PRIMARY KEY (work_id, topic_id),
         FOREIGN KEY (work_id) references works(work_id),
         FOREIGN KEY (topic_id) references topics(topic_id)
@@ -411,7 +411,7 @@ def create_tables():
     CREATE TABLE IF NOT EXISTS institutions (
         institution_id TEXT PRIMARY KEY,
         display_name TEXT,
-        ror TEXT,
+        ror TEXT UNIQUE,
         type TEXT,
         country_code TEXT
        
@@ -448,8 +448,9 @@ def create_tables():
 
     cur.execute("""
     CREATE TABLE IF NOT EXISTS citations (
-        citation_work_id TEXT,
+        citing_work_id TEXT,
         cited_work_id TEXT,
+        PRIMARY KEY (citing_work_id, cited_work_id)
     );
     """)
 
@@ -468,6 +469,11 @@ def create_tables():
         logging.info("Tabel citations oprettet")
     else:
         logging.error("Tabel citations ikke oprettet")
+        
+    cur.execute("CREATE INDEX IF NOT EXISTS idx_citations_citing_work_id ON citations (citing_work_id);")
+    cur.execute("CREATE INDEX IF NOT EXISTS idx_citations_cited_work_id ON citations (cited_work_id);")
+
+    conn.commit()
         
 
 

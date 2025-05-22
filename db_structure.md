@@ -47,24 +47,25 @@ Bemærk også primærnøgle:  (work_id, author_id)
 **works entitetstabel** 
 
 **Om reliabilitet af OpenAlex citationsoptælling se her: https://arxiv.org/abs/2401.16359**
+**NB: 'host_venue_ror' kan anvendes som fremmednøgle til 'institutions.ror'**
 
-| Kolonnenavn        | Type     | Beskrivelse                                                     |
-|--------------------|----------|-----------------------------------------------------------------|
-| work_id            | TEXT     | Primærnøgle - OpenAlex ID for værket                            |
-| doi                | TEXT     | DOI – 'Digital Object Identifier (kan være NULL)                |
-| title              | TEXT     | Værkets titel                                                   |
-| publication_date   | DATE     | Udgivelsesdato                                                  |
-| publication_year   | INTEGER  | Udgivelsesår                                                    |
-| type               | TEXT     | Værkets type - fx 'journal-article', 'book-chapter'             |
-| language           | TEXT     | Artikelens sprog, fx 'en', 'da', 'fr'                           |
-| cited_by_count     | INTEGER  | Antal gange værk er citeret (OpenAlex opgørelse)                |
-| is_oa              | BOOLEAN  | Open Access (`TRUE`/`FALSE`)                                    |
-| oa_status          | TEXT     | 'gold', 'green', 'hybrid', 'closed'                             |
-| license            | TEXT     | Licens for open access, fx. 'cc-by'                             |
-| host_venue_name    | TEXT     | Udgiver/forlag/konference for udgivelse                         |
-| host_venue_issn    | TEXT     | ISSN (International Standard Serial Number) fx '1234-5678' unikt|
-| host_venue_ror     | TEXT     | ROR-ID for udgiverinstitution (kan være NULL)                   |
-| created_date       | DATE     | Hvornår værk registreret i OpenAlex                             |
+| Kolonnenavn        | Type     | Beskrivelse                                                                                 |
+|--------------------|----------|---------------------------------------------------------------------------------------------|
+| work_id            | TEXT     | Primærnøgle - OpenAlex ID for værket                                                        |
+| doi                | TEXT     | DOI – 'Digital Object Identifier (kan være NULL)                                            |
+| title              | TEXT     | Værkets titel                                                                               |
+| publication_date   | DATE     | Udgivelsesdato                                                                              |
+| publication_year   | INTEGER  | Udgivelsesår                                                                                |
+| type               | TEXT     | Værkets type - fx 'journal-article', 'book-chapter'                                         |
+| language           | TEXT     | Artikelens sprog, fx 'en', 'da', 'fr'                                                       |
+| cited_by_count     | INTEGER  | Antal gange værk er citeret (OpenAlex opgørelse)                                            |
+| is_oa              | BOOLEAN  | Open Access (`TRUE`/`FALSE`)                                                                |
+| oa_status          | TEXT     | 'gold', 'green', 'hybrid', 'closed'                                                         |
+| license            | TEXT     | Licens for open access, fx. 'cc-by'                                                         |
+| host_venue_name    | TEXT     | Udgiver/forlag/konference for udgivelse                                                     |
+| host_venue_issn    | TEXT     | ISSN (International Standard Serial Number) fx '1234-5678' unikt                            |
+| host_venue_ror     | TEXT     | ROR-ID for udgiverinstitution (kan være NULL) – valgfri fremmednøgle til 'institutions.ror' |
+| created_date       | DATE     | Hvornår værk registreret i OpenAlex                                                         |
 
 ***
 
@@ -86,12 +87,8 @@ Bemærk også primærnøgle:  (work_id, author_id)
 | topic_id      | TEXT | Primærnøgle – OpenAlex ID for topic (format: 'T0000', uden præfix)                             |
 | display_name  | TEXT | Navn på emne                                                                                   |
 | subfield_id   | TEXT | Fremmednøgle til 'subfields.subfield_id' - OG - ID for subfield (format: '0000', uden præfix)  |
-| subfield_name | TEXT | Navn på subfield, fx 'Oncology'                                                                |
-| field_id      | TEXT | ID for felt (format: '00', uden præfix)                                                        |
-| field_name    | TEXT | Navn på felt, fx 'Medicine'                                                                    |
-| domain_id     | TEXT | ID for domæne (format: '0', uden præfix)                                                       |
-| domain_name   | TEXT | Navn på domæne, fx 'Health Sciences'                                                           |
-
+| field_id      | TEXT | Fremmednøgle til fields.field_id OG ID for felt (format: '00', uden præfix)                    |
+| domain_id     | TEXT | Fremmednøgle til domains.domain_id OG ID for domæne (format: '0', uden præfix)                 |
 
 ---
 
@@ -178,6 +175,7 @@ Bemærk også primærnøgle: (work_id, concept_id)
 ### institutions
 
 **institutions entititestabel** 
+**ror kan anvendes som fremmednøgle i andre tabeller, fx works.host_venue_ror**
 
 | Kolonnenavn      | Type | Beskrivelse                                                                            |
 | ---------------- | ---- | -------------------------------------------------------------------------------------- |
@@ -196,6 +194,7 @@ Bemærk også primærnøgle: (work_id, concept_id)
 
 **NB: Relation mellem to værker – vises ved citation** 
 Bemærk også primærnøgle: (citing_work_id, cited_work_id)
+fremmednøgle - begge er Fremmednøgle til 'works.work_id'
 
 | Kolonnenavn      | Type   | Beskrivelse                                                     |
 |------------------|--------|-----------------------------------------------------------------|

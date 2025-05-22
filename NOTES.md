@@ -41,6 +41,14 @@ Status: Logging fungerer som ønsket.
   https://ror.readme.io/docs/basics
 
 ---
+## Datavalidering
+multifaceteret:
+- før hentning ved design fx. db-struktur - unique values, og FK'er, PK'er
+- under hentning - parsinglogikker - fx. hvis liste med authorships er tom så skip
+- efter implementering, men før analyse: krydstjek på dubletter, på tomme felter, inspicer nulls etc.
+
+måske skal der laves en struktureret beskrivelse af dette for at sikre dokumentation af netop dette?
+---
 
 ## OpenAlex data
 
