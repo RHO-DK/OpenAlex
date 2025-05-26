@@ -12,6 +12,17 @@
    - cursor paging, relevant for at udtømme forespørgsler
    - enhedstyper: Works, Authors, Sources, Institutions, Concepts (legacy), Topics, (Publishers, Funders)
 
+**standardiseret blok til indsætning i alle filer der behøver path til config.py**
+"
+import sys
+import os
+
+# føjer src til eksportsti
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
+"
+
+
 ### Tests
 
    - 25.5.22: en **test**hentning giver problemer: urllib3 advarer om manglende OpenSSL-kompatibilitet (LibreSSL 2.8.3). dog ingen praktiske problemer bemærket

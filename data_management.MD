@@ -1,5 +1,5 @@
 
-# 📄 Datahåndtering og dokumentation
+# Datahåndtering og dokumentation
 
 Nedenfor beskrives hvordan data indsamles, håndteres, valideres og opbevares i projektet. 
 

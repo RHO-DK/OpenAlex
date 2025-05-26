@@ -33,6 +33,10 @@ MANIFEST
 wheels/
 share/python-wheels/
 
+# data
+data/
+data/raw/
+
 
 # Temp- eller udviklingsfiler
 sandbox/

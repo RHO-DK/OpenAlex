@@ -17,24 +17,24 @@ Dette projekt demonstrerer struktureret databehandling, analyse og præsentation
 ## Output
 Levere output via flere værktøjer, for at vise overførbarhed af kompetencer - forskellighed relateret til såvel teknologi, som til hvilke beslutninger der kan understøttes - usecases
 
-- 📊 Interaktive dashboards:
+- Interaktive dashboards:
   - Python (Dash)
   - R (Shiny)
   - Microsoft Power BI
 
-- 📝 Statisk rapport:
+- Statisk rapport:
   - 'report.ipynb': Python-baseret rapport i notebook-format
   - 'report.Rmd': R-baseret rapport i markdown-format
   - Fokus på trends, netværk og beslutningsrelevante indsigter
 
 
-  ## Miljø
+## Miljø
 - Python-version: 3.9.6  
 - Virtuelt miljø: venv ('python3 -m venv openalex')
 - Pakkehåndtering: pip  
 - Krav: se 'requirements.txt'
 
-## 📦 Datahåndtering
+## Datahåndtering
 
 - Der benyttes offentligt tilgængelige metadata fra OpenAlex, ROR og ORCID. 
 - Data struktureres og analyseres i en lokal PostgreSQL-database.
