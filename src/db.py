@@ -1,11 +1,11 @@
 import psycopg2
 
 try:
-    from config import DB_NAME, LOG_PATH_DB
-    if not DB_NAME or not isinstance(DB_NAME, str).strip():
-        raise ValueError("DB_NAME er ikke defineret korrekt i config.py")
-    if not LOG_PATH_DB or not isinstance(LOG_PATH_DB, str).strip():
-        raise ValueError("LOG_PATH_DB er ikke defineret korrekt i config.py")
+    from config import OA_DB_NAME, OA_LOG_PATH_DB
+    if not isinstance(OA_DB_NAME, str) or not OA_DB_NAME.strip():
+        raise ValueError("OA_DB_NAME er ikke defineret korrekt i config.py")
+    if not isinstance(OA_LOG_PATH_DB, str) or not OA_LOG_PATH_DB.strip():
+        raise ValueError("OA_LOG_PATH_DB er ikke defineret korrekt i config.py")
 except ImportError as e:
     raise ImportError("config.py kunne ikke importeres -  mangler filen?") from e
 
@@ -52,7 +52,7 @@ import traceback
 #---Logging - both by log and print - NB: logging.INFO - kan ændres til niveau DEBUG hvis mere detaljeret niveau relevant for simulering af fejl fx.
 
 # logfil-handler
-file_handler = logging.FileHandler(LOG_PATH_DB)
+file_handler = logging.FileHandler(OA_LOG_PATH_DB)
 file_handler.setLevel(logging.INFO)
 file_handler.setFormatter(logging.Formatter("%(asctime)s - %(levelname)s - %(message)s"))
 
@@ -68,7 +68,7 @@ logging.basicConfig(level=logging.INFO, handlers=[file_handler, console_handler]
 #---connect og creating tables
 
 def connect_db():
-    return psycopg2.connect(dbname=DB_NAME, user="postgres")
+    return psycopg2.connect(dbname=OA_DB_NAME, user="postgres")
 
 def create_tables():
     try:

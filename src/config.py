@@ -1,7 +1,7 @@
 #---General configs
 API_TIMEOUT = 10
 
-# --- OpenAlex
+# --- OpenAlexExtraction
 
 OPENALEX_BASE_URL = "https://api.openalex.org/works"
 OPENALEX_PARAMS = {"filter": "authorships.institutions.country_code:DK,from_publication_date:2014-01-01",
@@ -11,9 +11,9 @@ OPENALEX_PARAMS = {"filter": "authorships.institutions.country_code:DK,from_publ
 LOG_PATH_EXTRACT_OPENALEX = "logs/extract_openalex.log"
 
 
-#--- DB
-LOG_PATH_DB = "logs/db_setup.log"
-DB_NAME = "openalex_db"
+#--- OpenAlexDB
+OA_LOG_PATH_DB = "logs/db_setup.log"
+OA_DB_NAME = "openalex_db"
 
 
 
