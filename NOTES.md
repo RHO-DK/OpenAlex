@@ -79,6 +79,22 @@ Evt kan selektive udvidelser tilføjes på sigt - fx. mest citerede værker.
 **for detaljer se db_structure.md**
 
 ---
+## Data Mangement Plan
+
+**information der har været hjælpsom**
+
+info og underlinks fra SDU (der er også adgang til at se åbne DMP'er og lade sig inspirere):
+https://libguides.sdu.dk/godakademiskpraksis/datamanagement
+
+
+online kursus - gratis:
+https://mantra.ed.ac.uk/
+
+
+___
+
+## Logging
+attributter: https://docs.python.org/3/library/logging.html#logrecord-attributes
 
 ## Analyseovervejelser og usecases
 

@@ -2,6 +2,16 @@
 
 Tilføjes med logikken: MAJOR.MINOR.PATCH (1.1.1), og dertil dato for ændring. 
 
+## [0.6.0] – 2025-05-26
+
+
+### Tilføjet
+- Første version af 'extract_openalex.py' klar - der er kørt tests af hent og log og gem via sandbox
+- Hetede filer gemmes gemmes i rodmappen i 'data/raw/03', sidevis som json filer, klar til parsing
+- Tilføjet diverse fejlhåndtering: timeout, HTTP-fejl, ukendte fejl
+- Logging sat op med RotatingFileHandler til `logs/extract_openalex.log`
+
+
 ## [0.5.0] – 2025-05-26
 
 ## Ændring: Robust fejlhåndtering og udvidet logging i db.py og constraints_db.py
@@ -11,6 +21,7 @@ Tilføjes med logikken: MAJOR.MINOR.PATCH (1.1.1), og dertil dato for ændring.
 - Logging fortsat til både konsol og fil for al kritisk funktionalitet
 - Forbedringen af fejlovervågning, giver mere detaljeret indsigt og adgang til forståelse og håndtering af fejl
 - fokuseret på udvikling, ikke drift.
+
 
 ---
 
