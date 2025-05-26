@@ -1,11 +1,23 @@
 import psycopg2
 
+
+OA_DB_NAME = "openalex_db"
+OA_DB_USER = "postgres"
+OA_DB_HOST = "localhost"
+OA_DB_PORT = "5432" 
+
 try:
-    from config import OA_DB_NAME, OA_LOG_PATH_DB
+    from config import OA_DB_NAME, OA_LOG_PATH_DB, OA_DB_USER, OA_DB_HOST, OA_DB_PORT
     if not isinstance(OA_DB_NAME, str) or not OA_DB_NAME.strip():
         raise ValueError("OA_DB_NAME er ikke defineret korrekt i config.py")
     if not isinstance(OA_LOG_PATH_DB, str) or not OA_LOG_PATH_DB.strip():
         raise ValueError("OA_LOG_PATH_DB er ikke defineret korrekt i config.py")
+    if not isinstance(OA_DB_USER, str) or not OA_DB_USER.strip():
+        raise ValueError("OA_DB_USER er ikke defineret korrekt i config.py")
+    if not isinstance(OA_DB_HOST, str) or not OA_DB_HOST.strip():
+        raise ValueError("OA_DB_HOST er ikke defineret korrekt i config.py")
+    if not isinstance(OA_DB_PORT, int) or not OA_DB_PORT:
+        raise ValueError("OA_DB_PORT er ikke defineret korrekt i config.py")
 except ImportError as e:
     raise ImportError("config.py kunne ikke importeres -  mangler filen?") from e
 
@@ -68,7 +80,12 @@ logging.basicConfig(level=logging.INFO, handlers=[file_handler, console_handler]
 #---connect og creating tables
 
 def connect_db():
-    return psycopg2.connect(dbname=OA_DB_NAME, user="postgres")
+    return psycopg2.connect(
+        dbname=OA_DB_NAME, 
+        user=OA_DB_USER,
+        host=OA_DB_HOST,
+        port=OA_DB_PORT
+        )
 
 def create_tables():
     try:

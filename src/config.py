@@ -14,6 +14,10 @@ LOG_PATH_EXTRACT_OPENALEX = "logs/extract_openalex.log"
 #--- OpenAlexDB
 OA_LOG_PATH_DB = "logs/db_setup.log"
 OA_DB_NAME = "openalex_db"
+OA_DB_USER = "postgres"
+OA_DB_HOST = "localhost"
+OA_DB_PORT = "5432" 
+
 
 
 
