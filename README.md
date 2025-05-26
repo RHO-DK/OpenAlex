@@ -34,5 +34,14 @@ Levere output via flere værktøjer, for at vise overførbarhed af kompetencer -
 - Pakkehåndtering: pip  
 - Krav: se 'requirements.txt'
 
+## 📦 Datahåndtering
+
+- Der benyttes offentligt tilgængelige metadata fra OpenAlex, ROR og ORCID. 
+- Data struktureres og analyseres i en lokal PostgreSQL-database.
+
+For mere præcis beskrivelse af håndtering og opdatering: 'data_management.md'
+
+
+
 
 
