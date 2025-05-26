@@ -2,7 +2,7 @@ import psycopg2
 
 
 try:
-    from config import OA_DB_NAME, OA_LOG_PATH_DB, OA_DB_USER, OA_DB_HOST, OA_DB_PORT
+    from config import OA_DB_NAME, OA_LOG_PATH_DB, OA_DB_USER, OA_DB_HOST, OA_DB_PORT, OA_DB_PASSWORD
     if not isinstance(OA_DB_NAME, str) or not OA_DB_NAME.strip():
         raise ValueError("OA_DB_NAME er ikke defineret korrekt i config.py")
     if not isinstance(OA_LOG_PATH_DB, str) or not OA_LOG_PATH_DB.strip():
@@ -13,6 +13,8 @@ try:
         raise ValueError("OA_DB_HOST er ikke defineret korrekt i config.py")
     if not isinstance(OA_DB_PORT, int) or not OA_DB_PORT:
         raise ValueError("OA_DB_PORT er ikke defineret korrekt i config.py")
+    if not isinstance(OA_DB_PASSWORD, str) or not OA_DB_PASSWORD.strip():
+        raise ValueError("OA_DB_PASSWORD er ikke defineret korrekt i venv")
 except ImportError as e:
     raise ImportError("config.py kunne ikke importeres -  mangler filen?") from e
 
@@ -78,6 +80,7 @@ def connect_db():
     return psycopg2.connect(
         dbname=OA_DB_NAME, 
         user=OA_DB_USER,
+        password=OA_DB_PASSWORD,
         host=OA_DB_HOST,
         port=OA_DB_PORT
         )
@@ -151,7 +154,7 @@ def create_tables():
                 institution_id TEXT,
                 author_position TEXT, 
                 is_corresponding BOOLEAN,
-                PRIMARY KEY (work_id, author_id),
+                PRIMARY KEY (work_id, author_id)
 
             );
             """)
@@ -370,7 +373,7 @@ def create_tables():
                 topic_id TEXT,
                 score FLOAT,
                 is_primary BOOLEAN,
-                PRIMARY KEY (work_id, topic_id),
+                PRIMARY KEY (work_id, topic_id)
 
             );
             """)
