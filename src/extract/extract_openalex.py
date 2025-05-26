@@ -8,17 +8,19 @@ import traceback
 from logging.handlers import RotatingFileHandler
 
 try:
-    from config import BASE_URL, PARAMS
-    if not BASE_URL or not isinstance(BASE_URL, str):
-        raise ValueError("BASE_URL er ikke defineret korrekt i config.py")
-    if not PARAMS or not isinstance(PARAMS, str):
-        raise ValueError("PARAMS er ikke defineret korrekt i config.py")
+    from config import OPENALEX_BASE_URL, OPENALEX_PARAMS, LOG_PATH_EXTRACT_OPENALEX
+    if not isinstance(OPENALEX_BASE_URL, str) or not OPENALEX_BASE_URL.strip():
+        raise ValueError("OPENALEX_BASE_URL er ikke defineret korrekt i config.py")
+    if not isinstance(OPENALEX_PARAMS, dict) or not OPENALEX_PARAMS:
+        raise ValueError("OPENALEX_PARAMS er ikke defineret korrekt i config.py")
+    if not isinstance(LOG_PATH_EXTRACT_OPENALEX, str) or not LOG_PATH_EXTRACT_OPENALEX.strip():
+        raise ValueError("LOG_PATH_EXTRACT_OPENALEX er ikke defineret korrekt i config.py")
 except ImportError as e:
     raise ImportError("config.py kunne ikke importeres -  mangler filen?") from e
 
 
 # --- Logging
-log_handler = RotatingFileHandler("logs/extract_openalex.log", maxBytes=10**6, backupCount=3)
+log_handler = RotatingFileHandler(LOG_PATH_EXTRACT_OPENALEX, maxBytes=10**6, backupCount=3)
 logging.basicConfig(
     handlers=[log_handler],
     level=logging.INFO,
@@ -39,13 +41,13 @@ def save_page(data, page_number):
 
 # --- datahentning - også sidebaseret
 def fetch_openalex_works():
-    url = BASE_URL
+    url = OPENALEX_BASE_URL
     cursor = "*"
     page = 1
     total_works = 0
 
     while cursor:
-        params = PARAMS.copy()
+        params = OPENALEX_PARAMS.copy()
         params["cursor"] = cursor
 
         
