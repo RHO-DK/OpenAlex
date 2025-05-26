@@ -33,89 +33,91 @@ logging.basicConfig(level=logging.INFO, handlers=[file_handler, console_handler]
 def connect_db():
     return psycopg2.connect(dbname=DB_NAME, user="postgres")
 
+
 def alter_tables():
-    conn = connect_db()
-    cur = conn.cursor()
-    
-
-    #Authorships
-    
     try:
-        logging.info("Tilføjer fremmednøgler til authorships")
-        cur.execute("""
-            ALTER TABLE authorships
-            ADD CONSTRAINT fk_authorships_work FOREIGN KEY (work_id) REFERENCES works(work_id),
-            ADD CONSTRAINT fk_authorships_author FOREIGN KEY (author_id) REFERENCES authors(author_id),
-            ADD CONSTRAINT fk_authorships_institution FOREIGN KEY (institution_id) REFERENCES institutions(institution_id);
-        """)
+        conn = connect_db()
+        cur = conn.cursor()
         
-        conn.commit()
         
-        logging.info("Fremmednøgler tilføjet til authorships")
+        #Authorships
         
-    except Exception as e:
-        logging.error("Fejl ved tilføjelse af fremmednøgl(er) til authorships: " + str(e))
-        logging.debug(traceback.format_exc())
-        conn.rollback()
-    
-
-    # work_topics
-    try:
-        logging.info("Tilføjer fremmednøgler til work_topics")
-        cur.execute("""
-            ALTER TABLE work_topics
-            ADD CONSTRAINT fk_work_topics_work FOREIGN KEY (work_id) REFERENCES works(work_id),
-            ADD CONSTRAINT fk_work_topics_topic FOREIGN KEY (topic_id) REFERENCES topics(topic_id);
-        """)
-        
-        conn.commit()
-        
-        logging.info("Fremmednøgler tilføjet til work_topics")
-        
-    except Exception as e:
-        logging.error("Fejl ved tilføjelse af fremmednøgl(er) til work_topics: " + str(e))
-        logging.debug(traceback.format_exc())
-        conn.rollback()
-
-    
-     # work_concepts
-    try:
-         logging.info("tilføje fremmenøgle(r) til work_concepts")
-         cur.execute("""
-            ALTER TABLE work_concepts
-            ADD CONSTRAINT fk_work_concepts_work FOREIGN KEY (work_id) REFERENCES works(work_id),
-            ADD CONSTRAINT fk_work_concepts_concept FOREIGN KEY (concept_id) REFERENCES concepts(concept_id);
-        """)
-         
-         conn.commit()
-         
-         logging.info("Fremmednøgler tilføjet til work_concepts")
-        
-    except Exception as e:
-        logging.error("Fejl ved tilføjelse af fremmednøgl(er) til work_concepts: " + str(e))
-        logging.debug(traceback.format_exc())
-        conn.rollback()
- 
-
-    # topics
-    try:
-        logging.info("fremmednøgle tilføjes topics tabel")
-
-        cur.execute("""  
-            ALTER TABLE topics
-            ADD CONSTRAINT fk_topics_subfield FOREIGN KEY (subfield_id) REFERENCES subfields(subfield_id),
-            ADD CONSTRAINT fk_topics_field FOREIGN KEY (field_id) REFERENCES fields(field_id),
-            ADD CONSTRAINT fk_topics_domain FOREIGN KEY (domain_id) REFERENCES domains(domain_id);
+        try:
+            logging.info("Tilføjer fremmednøgler til authorships")
+            cur.execute("""
+                ALTER TABLE authorships
+                ADD CONSTRAINT fk_authorships_work FOREIGN KEY (work_id) REFERENCES works(work_id),
+                ADD CONSTRAINT fk_authorships_author FOREIGN KEY (author_id) REFERENCES authors(author_id),
+                ADD CONSTRAINT fk_authorships_institution FOREIGN KEY (institution_id) REFERENCES institutions(institution_id);
             """)
-        conn.commit()
+            
+            conn.commit()
+            
+            logging.info("Fremmednøgler tilføjet til authorships")
+            
+        except Exception as e:
+            logging.error("Fejl ved tilføjelse af fremmednøgl(er) til authorships: " + str(e))
+            logging.debug(traceback.format_exc())
+            conn.rollback()
         
-        logging.info("fremmednøgle tilføjet topics tabel")
+
+        # work_topics
+        try:
+            logging.info("Tilføjer fremmednøgler til work_topics")
+            cur.execute("""
+                ALTER TABLE work_topics
+                ADD CONSTRAINT fk_work_topics_work FOREIGN KEY (work_id) REFERENCES works(work_id),
+                ADD CONSTRAINT fk_work_topics_topic FOREIGN KEY (topic_id) REFERENCES topics(topic_id);
+            """)
+            
+            conn.commit()
+            
+            logging.info("Fremmednøgler tilføjet til work_topics")
+            
+        except Exception as e:
+            logging.error("Fejl ved tilføjelse af fremmednøgl(er) til work_topics: " + str(e))
+            logging.debug(traceback.format_exc())
+            conn.rollback()
+
         
-    except Exception as e:
-        logging.error("Fejl ved tilføjelse af fremmednøgl(er) til topics tabel: " + str(e))
-        logging.debug(traceback.format_exc())
-        conn.rollback()
-        
+        # work_concepts
+        try:
+            logging.info("tilføje fremmenøgle(r) til work_concepts")
+            cur.execute("""
+                ALTER TABLE work_concepts
+                ADD CONSTRAINT fk_work_concepts_work FOREIGN KEY (work_id) REFERENCES works(work_id),
+                ADD CONSTRAINT fk_work_concepts_concept FOREIGN KEY (concept_id) REFERENCES concepts(concept_id);
+            """)
+            
+            conn.commit()
+            
+            logging.info("Fremmednøgler tilføjet til work_concepts")
+            
+        except Exception as e:
+            logging.error("Fejl ved tilføjelse af fremmednøgl(er) til work_concepts: " + str(e))
+            logging.debug(traceback.format_exc())
+            conn.rollback()
+    
+
+        # topics
+        try:
+            logging.info("fremmednøgle tilføjes topics tabel")
+
+            cur.execute("""  
+                ALTER TABLE topics
+                ADD CONSTRAINT fk_topics_subfield FOREIGN KEY (subfield_id) REFERENCES subfields(subfield_id),
+                ADD CONSTRAINT fk_topics_field FOREIGN KEY (field_id) REFERENCES fields(field_id),
+                ADD CONSTRAINT fk_topics_domain FOREIGN KEY (domain_id) REFERENCES domains(domain_id);
+                """)
+            conn.commit()
+            
+            logging.info("fremmednøgle tilføjet topics tabel")
+            
+        except Exception as e:
+            logging.error("Fejl ved tilføjelse af fremmednøgl(er) til topics tabel: " + str(e))
+            logging.debug(traceback.format_exc())
+            conn.rollback()
+            
 
         # fields
         try:
@@ -184,8 +186,17 @@ def alter_tables():
             logging.debug(traceback.format_exc())
             conn.rollback()
             
+    
+    except Exception as e:
+        logging.critical("Fejl i forbindelse til db: " + str(e))
+        logging.debug(traceback.format_exc())
 
-
-    cur.close()
-    conn.close()
+    finally:
+        try:
+            cur.close()
+            conn.close()
+        except:
+            pass
+        
+    
 
