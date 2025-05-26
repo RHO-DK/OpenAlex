@@ -210,5 +210,5 @@ def alter_tables():
         except:
             pass
         
-    
-
+if __name__ == "__main__":
+    alter_tables()

@@ -546,3 +546,6 @@ def create_tables():
             conn.close()
         except:
             pass
+
+if __name__ == "__main__":
+    create_tables()
