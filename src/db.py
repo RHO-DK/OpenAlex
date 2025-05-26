@@ -1,11 +1,6 @@
 import psycopg2
 
 
-OA_DB_NAME = "openalex_db"
-OA_DB_USER = "postgres"
-OA_DB_HOST = "localhost"
-OA_DB_PORT = "5432" 
-
 try:
     from config import OA_DB_NAME, OA_LOG_PATH_DB, OA_DB_USER, OA_DB_HOST, OA_DB_PORT
     if not isinstance(OA_DB_NAME, str) or not OA_DB_NAME.strip():
