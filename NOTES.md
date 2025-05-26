@@ -7,6 +7,8 @@
     - mere konkret  - forstå OpenAlex' datastruktur - til at forme præcise requests: https://api.openalex.org/works?filter=from_publication_date:2020-01-01&per-page=1 
 - Hentning baseret på OpenAlex dokumentation:
     https://docs.openalex.org/
+- OpenAlex 'institutions' whitepaper https://docs.google.com/document/d/1ppbKRVtyneWc7Hjpo8TOm57YLGx1C2Oo/edit?tab=t.0#heading=h.5w2tb5fcg77r
+
 
 ### Hentning konkrete elementer:
    - cursor paging, relevant for at udtømme forespørgsler
@@ -21,6 +23,12 @@ import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 "
+
+### Køn - metoder til at fastslå:
+blogindlæg: https://stacykonkiel.org/identify-author-gender-data-analysis/
+artikel - brugt genderize.io, har en R plugin? 'genderizeR': https://www.nature.com/articles/s43856-023-00417-3#Sec2
+review af metoder - køn i bibliometri: https://asistdl.onlinelibrary.wiley.com/doi/full/10.1002/asi.25012
+
 
 
 ### Tests
