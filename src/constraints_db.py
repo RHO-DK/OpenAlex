@@ -27,79 +27,165 @@ console_handler.setFormatter(logging.Formatter("%(levelname)s - %(message)s"))
 logging.basicConfig(level=logging.INFO, handlers=[file_handler, console_handler])
 
 
-def apply_foreign_keys():
-    conn = psycopg2.connect(dbname=DB_NAME, user="postgres")
+
+#---altering tables
+
+def connect_db():
+    return psycopg2.connect(dbname=DB_NAME, user="postgres")
+
+def alter_tables():
+    conn = connect_db()
     cur = conn.cursor()
+    
 
-    foreign_key_commands = [
-        # authorships
-        """
-        ALTER TABLE authorships
-        ADD CONSTRAINT fk_authorships_work FOREIGN KEY (work_id) REFERENCES works(work_id),
-        ADD CONSTRAINT fk_authorships_author FOREIGN KEY (author_id) REFERENCES authors(author_id),
-        ADD CONSTRAINT fk_authorships_institution FOREIGN KEY (institution_id) REFERENCES institutions(institution_id);
-        """,
+    #Authorships
+    
+    try:
+        logging.info("Tilføjer fremmednøgler til authorships")
+        cur.execute("""
+            ALTER TABLE authorships
+            ADD CONSTRAINT fk_authorships_work FOREIGN KEY (work_id) REFERENCES works(work_id),
+            ADD CONSTRAINT fk_authorships_author FOREIGN KEY (author_id) REFERENCES authors(author_id),
+            ADD CONSTRAINT fk_authorships_institution FOREIGN KEY (institution_id) REFERENCES institutions(institution_id);
+        """)
+        
+        conn.commit()
+        
+        logging.info("Fremmednøgler tilføjet til authorships")
+        
+    except Exception as e:
+        logging.error("Fejl ved tilføjelse af fremmednøgl(er) til authorships: " + str(e))
+        logging.debug(traceback.format_exc())
+        conn.rollback()
+    
 
-        # work_topics
-        """
-        ALTER TABLE work_topics
-        ADD CONSTRAINT fk_work_topics_work FOREIGN KEY (work_id) REFERENCES works(work_id),
-        ADD CONSTRAINT fk_work_topics_topic FOREIGN KEY (topic_id) REFERENCES topics(topic_id);
-        """,
+    # work_topics
+    try:
+        logging.info("Tilføjer fremmednøgler til work_topics")
+        cur.execute("""
+            ALTER TABLE work_topics
+            ADD CONSTRAINT fk_work_topics_work FOREIGN KEY (work_id) REFERENCES works(work_id),
+            ADD CONSTRAINT fk_work_topics_topic FOREIGN KEY (topic_id) REFERENCES topics(topic_id);
+        """)
+        
+        conn.commit()
+        
+        logging.info("Fremmednøgler tilføjet til work_topics")
+        
+    except Exception as e:
+        logging.error("Fejl ved tilføjelse af fremmednøgl(er) til work_topics: " + str(e))
+        logging.debug(traceback.format_exc())
+        conn.rollback()
 
-        # work_concepts
-        """
-        ALTER TABLE work_concepts
-        ADD CONSTRAINT fk_work_concepts_work FOREIGN KEY (work_id) REFERENCES works(work_id),
-        ADD CONSTRAINT fk_work_concepts_concept FOREIGN KEY (concept_id) REFERENCES concepts(concept_id);
-        """,
+    
+     # work_concepts
+    try:
+         logging.info("tilføje fremmenøgle(r) til work_concepts")
+         cur.execute("""
+            ALTER TABLE work_concepts
+            ADD CONSTRAINT fk_work_concepts_work FOREIGN KEY (work_id) REFERENCES works(work_id),
+            ADD CONSTRAINT fk_work_concepts_concept FOREIGN KEY (concept_id) REFERENCES concepts(concept_id);
+        """)
+         
+         conn.commit()
+         
+         logging.info("Fremmednøgler tilføjet til work_concepts")
+        
+    except Exception as e:
+        logging.error("Fejl ved tilføjelse af fremmednøgl(er) til work_concepts: " + str(e))
+        logging.debug(traceback.format_exc())
+        conn.rollback()
+ 
 
-        # topics
-        """
-        ALTER TABLE topics
-        ADD CONSTRAINT fk_topics_subfield FOREIGN KEY (subfield_id) REFERENCES subfields(subfield_id),
-        ADD CONSTRAINT fk_topics_field FOREIGN KEY (field_id) REFERENCES fields(field_id),
-        ADD CONSTRAINT fk_topics_domain FOREIGN KEY (domain_id) REFERENCES domains(domain_id);
-        """,
+    # topics
+    try:
+        logging.info("fremmednøgle tilføjes topics tabel")
+
+        cur.execute("""  
+            ALTER TABLE topics
+            ADD CONSTRAINT fk_topics_subfield FOREIGN KEY (subfield_id) REFERENCES subfields(subfield_id),
+            ADD CONSTRAINT fk_topics_field FOREIGN KEY (field_id) REFERENCES fields(field_id),
+            ADD CONSTRAINT fk_topics_domain FOREIGN KEY (domain_id) REFERENCES domains(domain_id);
+            """)
+        conn.commit()
+        
+        logging.info("fremmednøgle tilføjet topics tabel")
+        
+    except Exception as e:
+        logging.error("Fejl ved tilføjelse af fremmednøgl(er) til topics tabel: " + str(e))
+        logging.debug(traceback.format_exc())
+        conn.rollback()
+        
 
         # fields
-        """
-        ALTER TABLE fields
-        ADD CONSTRAINT fk_fields_domain FOREIGN KEY (domain_id) REFERENCES domains(domain_id);
-        """,
+        try:
+            logging.info("Fremmednøgle tilføjes fields tabel")
+            
+            cur.execute("""
+                ALTER TABLE fields
+                ADD CONSTRAINT fk_fields_domain FOREIGN KEY (domain_id) REFERENCES domains(domain_id);
+                """)
+            conn.commit()
+            
+            logging.info("fremmednøgle tilføjet tields tabel")
+        
+        except Exception as e:
+            logging.error("Fejl ved tilføjelse af fremmednøgl(er) til fields tabel: " + str(e))
+            logging.debug(traceback.format_exc())
+            conn.rollback()
+            
 
         # subfields
-        """
-        ALTER TABLE subfields
-        ADD CONSTRAINT fk_subfields_field FOREIGN KEY (field_id) REFERENCES fields(field_id);
-        """,
-
-        # citations
-        """
-        ALTER TABLE citations
-        ADD CONSTRAINT fk_citations_citing FOREIGN KEY (citing_work_id) REFERENCES works(work_id),
-        ADD CONSTRAINT fk_citations_cited FOREIGN KEY (cited_work_id) REFERENCES works(work_id);
-        """,
-
-        # works → institutions
-        """
-        ALTER TABLE works
-        ADD CONSTRAINT fk_works_host_venue FOREIGN KEY (host_venue_ror) REFERENCES institutions(ror);
-        """
-       
-    ]
-
-    for cmd in foreign_key_commands:
         try:
-            cur.execute(cmd)
-            conn.commit()
-            print("OK:", cmd.strip().split('\n')[0])  # Print første linje af kommandoen
+            logging.info("fremmednøgle tilføjes subfields tabel")
+            
+            cur.execute("""
+                ALTER TABLE subfields
+                ADD CONSTRAINT fk_subfields_field FOREIGN KEY (field_id) REFERENCES fields(field_id);
+                """)
+            
+            logging.info("fremmednøgle tilføjet subfields tabel")
+        
         except Exception as e:
-            print("FEJL:", e)
+            logging.error("Fejl ved tilføjelse af fremmednøgl(er) til subfields tabel: " + str(e))
+            logging.debug(traceback.format_exc())
             conn.rollback()
+            
+        
+        # citations
+        try:
+            logging.info("fremmednøgle tiføjes citations tabel")
+            
+            cur.execute("""
+                ALTER TABLE citations
+                ADD CONSTRAINT fk_citations_citing FOREIGN KEY (citing_work_id) REFERENCES works(work_id),
+                ADD CONSTRAINT fk_citations_cited FOREIGN KEY (cited_work_id) REFERENCES works(work_id);
+                """)
+            
+            logging.info("fremmednøgle tilføjet citations tabel")
+        
+        except Exception as e:
+            logging.error("Fejl ved tilføjelse af fremmednøgl(er) til citations tabel: " + str(e))
+            logging.debug(traceback.format_exc())
+            conn.rollback()
+            
+            
+        # works → institutions
+        try:
+            logging.info("fremmednøgle tilføjet works tabel")
+            cur.execute("""
+                ALTER TABLE works
+                ADD CONSTRAINT fk_works_host_venue FOREIGN KEY (host_venue_ror) REFERENCES institutions(ror);
+                """)
+            logging.info("fremmednøgle tilføjet works tabel")
+        
+        except Exception as e:
+            logging.error("Fejl ved tilføjelse af fremmednøgl(er) til works tabel: " + str(e))
+            logging.debug(traceback.format_exc())
+            conn.rollback()
+            
+
 
     cur.close()
     conn.close()
 
-if __name__ == "__main__":
-    apply_foreign_keys()

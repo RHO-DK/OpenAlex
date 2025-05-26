@@ -4,7 +4,7 @@ Tilføjes med logikken: MAJOR.MINOR.PATCH (1.1.1), og dertil dato for ændring.
 
 ## [0.5.0] – 2025-05-26
 
-## Ændring: Robust fejlhåndtering og udvidet logging
+## Ændring: Robust fejlhåndtering og udvidet logging i db.py og constraints_db.py
 
 - Tilføjet try/except-blokke omkring tabel- og indeksering af.
 - Inkluderet traceback.format_exc() for detaljeret fejlsporing
