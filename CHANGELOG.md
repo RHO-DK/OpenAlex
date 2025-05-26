@@ -2,6 +2,10 @@
 
 Tilføjes med logikken: MAJOR.MINOR.PATCH (1.1.1), og dertil dato for ændring. 
 
+
+
+---
+
 ## [0.6.0] – 2025-05-26
 
 
