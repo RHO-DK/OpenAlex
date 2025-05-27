@@ -1,18 +1,21 @@
 # OpenAlex Analyseprojekt
 
-Dette projekt demonstrerer struktureret databehandling, analyse og præsentation baseret på OpenAlex – en åben database for videnskabelig publicering. Læs også her: https://docs.openalex.org/
+Dette projekt demonstrerer struktureret databehandling, analyse og præsentation baseret på OpenAlex, ROR og ORCID – åbne databaser for videnskabelig publicering, insitutionsdata og forskeridentifikator.
 
 ## Funktioner
-- Automatisk datahentning via OpenAlex API
+- Automatisk datahentning via OpenAlex, ROR og ORCID AÅI
 - Datamanagement: Strukturering og lagring i PostgreSQL
+- Analyse visualiseret med PowerBI Pro
 - Analyse i R med præsentation via Shiny
 - Analyse i Python med præsentation via Dash
 - Modulær opbygning med mulighed for dashboard eller videreanvendelse
 
 ## Struktur
-- 'src/': Scripts til ETL og databasehåndtering
-- 'notebooks/': Udforskende analyser og visualisering
-- 'logs/: Logfiler fra automatiseret datakørsel
+- `src/`: Scripts til ETL og databasehåndtering
+- `docs/`: Sekundære dokumenter, der understøtter/dokumenterer arkitektur, test, beslutninger og planlægning.
+- `tests`: Testfiler - udviklingsstøtte i forhold til fejlscenarier, validering etc.
+- `logs/`: Logfiler fra automatiseret datakørsel
+- `notebooks/`: Udforskende analyser og visualisering
 
 ## Output
 Levere output via flere værktøjer, for at vise overførbarhed af kompetencer - forskellighed relateret til såvel teknologi, som til hvilke beslutninger der kan understøttes - usecases
@@ -39,7 +42,7 @@ Levere output via flere værktøjer, for at vise overførbarhed af kompetencer -
 - Der benyttes offentligt tilgængelige metadata fra OpenAlex, ROR og ORCID. 
 - Data struktureres og analyseres i en lokal PostgreSQL-database.
 
-For mere præcis beskrivelse af håndtering og opdatering: 'data_management.md'
+For beskrivelse af data håndtering: `docs/data_management.md`
 
 
 
