@@ -138,6 +138,32 @@ Bekræfte at `db.py` opretter planlagte tabeller i `openalex_db`, med præcis og
 ✅ Alle tabeller og indekser blev oprettet uden fejl.  
 ⚠️ To tastefejl i fil blev fundet via loggen (rettet efterfølgende).
 
+---
+
+## [25-05-2025] Test af fejllogning i fetch_works()
+
+**Mål**
+Validere at logging ved fejl i API-kald håndteres korrekt, og at log er meningsfuld og konstruktiv
+
+**Handlinger**
+- Kørte `sandbox/testLoggingFetch.py` med:
+  - Simuleret `ValueError` for at teste generel exception-håndtering
+  - Bevidst forkert endpoint (404) for at udløse `HTTPError`
+  - Satte timeout lavt for at udløse `TimeoutError`
+- Brugte `RotatingFileHandler` til logfil (`logs/test.log`)
+
+**Resultat**
+✅ Logging sker korrekt ved alle simulerede fejltyper
+✅ INFO-log ved succesfuldt kald
+✅ Detaljeret `traceback` ved exception
+✅ Logfiler roteres korrekt..
+
+**Bemærkning** 
+Tidlig test viste advarsel fra `urllib3` pga. manglende OpenSSL-kompatibilitet (LibreSSL 2.8.3),
+men der blev ikke observeret praktiske problemer ved API-adgang.
+
+
+
 
 
 
