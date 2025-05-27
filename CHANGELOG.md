@@ -3,6 +3,15 @@
 Tilføjes med logikken: MAJOR.MINOR.PATCH (1.1.1), og dertil dato for ændring. 
 
 
+## [0.7.0] – 2025-05-26
+
+### Ændring:
+- ny mappestruktur: test og doc mappe tilføjet
+- flyttet alle sekundære docs filer til docmappe
+- oprettet "TESTLOG.md" til bedre dokumentation af tests
+- fremadrettet dokumenteres resultater af tests ikke her - men i TESTLOG.md
+- unittesting etc køres ikke fra filer i "sandbox" (.gitignore), men via filer i dir tests
+
 
 ---
 
