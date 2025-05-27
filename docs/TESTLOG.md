@@ -19,6 +19,33 @@ Kørsler, scripts, parametre, værktøjer
 
 ___
 
+## [27-05-2025] Robusthedstest: af parser simuleret ødelagte eller ufuldstændige datastrukturer, dobbeltID etc
+
+**Mål**  
+Sikre at fejl håndteres robust, at kun værker med gyldig id indsættes.
+Sikre at værker med dobbelt eller samme id ikke indsættes
+Sikre håndtering af diversitet af fejl i data: mangler i nestede strukturer, null, eller forkerte værdier, manglende felter etc.
+Sikre præcis og velfungerende log på ID og antal indsatte værker
+Sikre robust håndtering og fortsat parsing ved fejl.
+
+**Handlinger/problemer/løsninger**  
+- En fil med kunstigt indførte fejl blev anvendt til at trigge fejlmeldninger og arbejde med håndtering
+- Bla fejl i `id`, `publication_date`, manglende `authorships`, ugyldige nøgler, manglende felter eller nestede elementer, dubletter
+- Tilføjede eksisterende `work_id` for at udløse `ON CONFLICT DO NOTHING`
+- Kørte paser på filen flere gange og tømte efter hver kørsel entries i tabellen
+- Kørsler blev anvendt til iterativ tilretning og mere robust fejlhåndtering.
+- Validering sket gennem log og visuel inspektion i pgAdmin
+- Flyttet `conn.commit()` til `try`-blokken, for at sikre fortsættelse af parsing
+- Tilføjet check af `cur.rowcount` for korrekt tælling af antal tilføjelser i db
+- Tilføjet logging af ikke-indførte værker pga. `ON CONFLICT`
+
+**Resultat**  
+✅ Fejl i `publication_date`, `id`, `authorships` mv. logges, men indsættes ikke
+✅ Transaktionen blev rullet tilbage, for hver fejl, dernæst fortsætter parser og efterfølgende indsættes igen i db
+✅ Parseren blev opdateret til kun at øge `inserted` ved `cur.rowcount == 1`
+
+
+
 ## [27-05-2025] Test af parsing: works_page_001 med ID-stripping
 
 **Mål**  
