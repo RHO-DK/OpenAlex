@@ -18,7 +18,7 @@ from config import (
     OA_DB_PORT
 )
 
-from utils.helpers import strip_prefix
+from utils.helpers import strip_id
 
 LOG_PATH_TEST_PARSE = "logs/test_parse_works_001.log"
 
@@ -59,7 +59,7 @@ def parse_and_insert_works(filepath):
             if not work.get("authorships"):
                 skipped += 1
                 logging.info(f"Springer over work uden authorships: {strip_prefix(work.get('id'))}")
-                skipped_ids.append(strip_prefix(work.get("id")))
+                skipped_ids.append(strip_id(work.get("id")))
                 continue
             
         
@@ -72,7 +72,7 @@ def parse_and_insert_works(filepath):
                     ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
                     ON CONFLICT (work_id) DO NOTHING;
                 """, (
-                    strip_prefix(work.get("id")),
+                    strip_id(work.get("id")),
                     work.get("doi"),
                     work.get("title"),
                     work.get("publication_date"),
@@ -84,7 +84,7 @@ def parse_and_insert_works(filepath):
                     work.get("open_access", {}).get("license"),
                     work.get("host_venue", {}).get("display_name"),
                     work.get("host_venue", {}).get("issn_l"),
-                    strip_prefix(work.get("host_venue", {}).get("institution", {}).get("ror")),
+                    strip_id(work.get("host_venue", {}).get("institution", {}).get("ror")),
                     work.get("created_date")
                 ))
                 
