@@ -29,7 +29,8 @@ blogindlæg: https://stacykonkiel.org/identify-author-gender-data-analysis/
 artikel - brugt genderize.io, har en R plugin? 'genderizeR': https://www.nature.com/articles/s43856-023-00417-3#Sec2
 review af metoder - køn i bibliometri: https://asistdl.onlinelibrary.wiley.com/doi/full/10.1002/asi.25012
 
-
+### opfølnging på tests
+se evt. TESTLOG.md  [27-05-2025] Parserkørsel over alle works-filer - det kan være relevant at undersøge for systematiske afvigelser.
 
 ### Tests
 

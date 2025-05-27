@@ -19,6 +19,15 @@ Kørsler, scripts, parametre, værktøjer
 
 ___
 
+## [27-05-2025] Parserkørsel over alle works-filer
+
+
+⚠️ Enkelte JSON-filer kunne ikke parses (formatfejl, tomt indhold, strukturelle afvigelser)
+Disse er automatisk logget i `logs/failed_files.txt`
+evt kan systematisk undersøgelse af batches afsløre systematiske fejl, på et senere tidspunkt - indsat i NOTES.md
+Øvrige data er korrekt behandlet og indsat i databasen.
+
+
 ## [27-05-2025] Robusthedstest: af parser simuleret ødelagte eller ufuldstændige datastrukturer, dobbeltID etc
 
 **Mål**  
