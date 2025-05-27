@@ -3,7 +3,7 @@
 Dette projekt demonstrerer struktureret databehandling, analyse og præsentation baseret på OpenAlex, ROR og ORCID – åbne databaser for videnskabelig publicering, insitutionsdata og forskeridentifikator.
 
 ## Funktioner
-- Automatisk datahentning via OpenAlex, ROR og ORCID AÅI
+- Automatisk datahentning via OpenAlex, ROR og ORCID API
 - Datamanagement: Strukturering og lagring i PostgreSQL
 - Analyse visualiseret med PowerBI Pro
 - Analyse i R med præsentation via Shiny
