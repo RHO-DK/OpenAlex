@@ -1,3 +1,9 @@
+## FØRST FOR
+- Tilpas transform_authorships_oa.py - den er råt kopieret fra transform_works_oa.py - og skal tilpasses så den parser til tabel authorships
+
+
+
+
 ## API-Overblik database indhold og tests
 
 **OpenAlex**
