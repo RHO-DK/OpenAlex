@@ -75,7 +75,7 @@ def parse_and_insert_works(filepath):
                 cur.execute("""
                     INSERT INTO works (
                         work_id, doi, title, publication_date, publication_year, type,
-                        language, cited_by_count, is_oa, license,
+                        language, cited_by_count, is_oa, oa_status,
                         host_venue_name, host_venue_issn, host_venue_ror, created_date
                     ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
                     ON CONFLICT (work_id) DO NOTHING;
@@ -89,7 +89,7 @@ def parse_and_insert_works(filepath):
                     work.get("language"),
                     work.get("cited_by_count"),
                     work.get("open_access", {}).get("is_oa"),
-                    work.get("best_oa_location", {}).get("license"),
+                    work.get("open_access", {}).get("oa_status"),
                     host_venue_name,
                     host_venue_issn,
                     host_venue_ror,

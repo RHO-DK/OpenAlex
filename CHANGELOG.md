@@ -3,13 +3,14 @@
 Tilføjes med logikken: MAJOR.MINOR.PATCH (1.1.1), og dertil dato for ændring. 
 
 
-## [0.8.0] – 2025-05-26
+## [0.8.0] – 2025-05-27
 
-### Ændring:
-- feltet licens udelades i tabel works - istedet indgår udelukkende oa_status der er mere intutitiv
+### Ændring i Databasestruktur
+- I tabel works ændres lices til oa_status
+- Årsag: mere intuitivt og let at forstå niveau af åben tilgang til udgivelsen
 
 
-## [0.7.0] – 2025-05-26
+## [0.7.0] – 2025-05-27
 
 ### Ændring:
 - ny mappestruktur: test og doc mappe tilføjet

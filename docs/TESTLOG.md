@@ -31,7 +31,8 @@ Test af logfunktioner
 - Parser er nu udbedret med fallback-struktur:
   enten `host_venue` hvis ikke så `primary_location.source` ellers tom dict: `{}`
 - DOI blev ikke strippet for præfix - dette er nu tilpasset
-- licens returnerede udelukkende NULL værdier, da værdien blev forsøgt hentet i forkert dict. tilrettet nu.
+- licens returnerede udelukkende NULL værdier, da værdien blev forsøgt hentet i forkert dict. 
+- licens hentes ikke - nu hentes istedet oa_status (som angiver niveau af åben tilgang)
 - Feltet `host_venue_ror` kan også hentes via `.get("host_organization")`, accepter NULL
 - Tømte `works`-tabel før ny kørsel (`DELETE FROM works`)
 - Kørte parser igen på `works_page_001.json`
@@ -43,7 +44,7 @@ ORDER BY work_id ASC`
 ✅ DOI indsættes nu uden præfix
 ✅ `host_venue_name` og `issn_l` parses og indsættes tilfredsstillende
 ✅ Logfunktioner virker tilfredsstillende
-✅ Licens-type hentes nu korrekt og indføres i db.
+✅ oa_status hentes og indføres problemfrit i db
 ⚠️ `host_venue_ror` er ofte NULL – acceptabelt. 
 
 
