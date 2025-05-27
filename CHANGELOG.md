@@ -7,8 +7,8 @@ Tilføjes med logikken: MAJOR.MINOR.PATCH (1.1.1), og dertil dato for ændring.
 
 ### Ændring:
 - ny mappestruktur: test og doc mappe tilføjet
-- flyttet alle sekundære docs filer til docmappe
-- oprettet "TESTLOG.md" til bedre dokumentation af tests
+- flyttet alle sekundære docs filer til docmappe (DMP, db-struktur-notes)
+- oprettet "TESTLOG.md" til bedre dokumentation af tests (i dir docs)
 - fremadrettet dokumenteres resultater af tests ikke her - men i TESTLOG.md
 - unittesting etc køres ikke fra filer i "sandbox" (.gitignore), men via filer i dir tests
 
