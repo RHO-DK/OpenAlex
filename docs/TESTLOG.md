@@ -9,7 +9,7 @@ Her dokumenteres gennemførte tests: hvad blev testet, dato, hvordan og resultat
 **Mål**  
 Hvad der testes/verificeres
 
-**Handlinger**  
+**Handlinger/problemer/løsninger**  
 Kørsler, scripts, parametre, værktøjer
 
 **Resultat**  
@@ -18,6 +18,35 @@ Kørsler, scripts, parametre, værktøjer
 ⚠️ Afvigelser
 
 ___
+
+## [27-05-2025] Test af parsing: works_page_001 med ID-stripping
+
+**Mål**  
+Teste om værker fra almene OpenAlex strukturer (`works_page_001.json`) kan parses korrekt,  og om ID felter strippes korrekt
+Validering af datakvalitet
+Test af logfunktioner
+
+**Handlinger/problemer/løsninger**  
+- Oprindelig parsing gav NULL i `host_venue_*`-felter, da `host_venue` manglede i mange JSON-entries
+- Parser er nu udbedret med fallback-struktur:
+  enten `host_venue` hvis ikke så `primary_location.source` ellers tom dict: `{}`
+- DOI blev ikke strippet for præfix - dette er nu tilpasset
+- licens returnerede udelukkende NULL værdier, da værdien blev forsøgt hentet i forkert dict. tilrettet nu.
+- Feltet `host_venue_ror` kan også hentes via `.get("host_organization")`, accepter NULL
+- Tømte `works`-tabel før ny kørsel (`DELETE FROM works`)
+- Kørte parser igen på `works_page_001.json`
+- Validerede data før og efter kørsel ved visuel inspektion i pgAdmin, Query tool: `SELECT * FROM public.works
+ORDER BY work_id ASC`
+
+**Resultat**  
+✅ Fallback struktur virker og rækker indsættes nu korrekt
+✅ DOI indsættes nu uden præfix
+✅ `host_venue_name` og `issn_l` parses og indsættes tilfredsstillende
+✅ Logfunktioner virker tilfredsstillende
+✅ Licens-type hentes nu korrekt og indføres i db.
+⚠️ `host_venue_ror` er ofte NULL – acceptabelt. 
+
+
 
 ## [27-05-2025] Test af `strip_id()` – udtræk af ID fra URL-strenge
 

@@ -1,9 +1,13 @@
+import logging
+
+
 #parsing
 
 #præfix-håndtering
 
 def strip_id(input_string):
     if not isinstance(input_string, str):
+        logging.debug(f"strip_id: Modtog ikke-streng ({type(input_string)}): {input_string}")
         return input_string
 
     # DOI afviger fra det generelle mønster i input_strings:

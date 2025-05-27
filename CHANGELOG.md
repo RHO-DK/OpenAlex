@@ -3,6 +3,12 @@
 Tilføjes med logikken: MAJOR.MINOR.PATCH (1.1.1), og dertil dato for ændring. 
 
 
+## [0.8.0] – 2025-05-26
+
+### Ændring:
+- feltet licens udelades i tabel works - istedet indgår udelukkende oa_status der er mere intutitiv
+
+
 ## [0.7.0] – 2025-05-26
 
 ### Ændring:

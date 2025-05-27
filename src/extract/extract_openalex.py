@@ -8,9 +8,6 @@ import logging
 import traceback
 from logging.handlers import RotatingFileHandler
 
-# Føjer src til importsti - trin op fra esxtract
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-
 try:
     from config import OPENALEX_BASE_URL, OPENALEX_PARAMS, LOG_PATH_EXTRACT_OPENALEX
     if not isinstance(OPENALEX_BASE_URL, str) or not OPENALEX_BASE_URL.strip():
@@ -22,6 +19,9 @@ try:
 except ImportError as e:
     raise ImportError("config.py kunne ikke importeres -  mangler filen?") from e
 
+
+# Føjer src til importsti - trin op fra esxtract
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 
 # --- Logging

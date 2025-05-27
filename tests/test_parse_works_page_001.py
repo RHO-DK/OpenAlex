@@ -58,11 +58,19 @@ def parse_and_insert_works(filepath):
             # Eksklusionskritere: skip work hvis authorships er tom eller mangler
             if not work.get("authorships"):
                 skipped += 1
-                logging.info(f"Springer over work uden authorships: {strip_prefix(work.get('id'))}")
+                logging.info(f"Springer over work uden authorships: {strip_id(work.get('id'))}")
                 skipped_ids.append(strip_id(work.get("id")))
                 continue
             
-        
+            # fallback til kildeoplysninger (host_venue eller source via primary_location)
+            venue = work.get("host_venue") or work.get("primary_location", {}).get("source") or {}
+
+            doi = strip_id(work.get("doi"))
+            host_venue_name = venue.get("display_name")
+            host_venue_issn = venue.get("issn_l")
+            host_venue_ror = strip_id(venue.get("host_organization"))
+            
+            
             try:
                 cur.execute("""
                     INSERT INTO works (
@@ -73,7 +81,7 @@ def parse_and_insert_works(filepath):
                     ON CONFLICT (work_id) DO NOTHING;
                 """, (
                     strip_id(work.get("id")),
-                    work.get("doi"),
+                    doi,
                     work.get("title"),
                     work.get("publication_date"),
                     work.get("publication_year"),
@@ -81,29 +89,14 @@ def parse_and_insert_works(filepath):
                     work.get("language"),
                     work.get("cited_by_count"),
                     work.get("open_access", {}).get("is_oa"),
-                    work.get("open_access", {}).get("license"),
-                    work.get("host_venue", {}).get("display_name"),
-                    work.get("host_venue", {}).get("issn_l"),
-                    strip_id(work.get("host_venue", {}).get("institution", {}).get("ror")),
+                    work.get("best_oa_location", {}).get("license"),
+                    host_venue_name,
+                    host_venue_issn,
+                    host_venue_ror,
                     work.get("created_date")
                 ))
                 
-                            CREATE TABLE IF NOT EXISTS works (
-                work_id TEXT PRIMARY KEY,
-                doi TEXT UNIQUE,
-                title TEXT,
-                publication_date DATE,
-                publication_year INTEGER,
-                type TEXT,
-                language TEXT,
-                cited_by_count INTEGER,
-                is_oa BOOLEAN,
-                license TEXT,
-                host_venue_name TEXT,
-                host_venue_issn TEXT,
-                host_venue_ror TEXT,
-                created_date DATE
-        
+                
                 inserted += 1
             except Exception as e:
                 logging.warning(f"Fejl ved parsing af work {work.get('id')}: {e}")
@@ -122,14 +115,17 @@ def parse_and_insert_works(filepath):
         conn.close()
 
     except Exception as e:
-        logging.critical(f"Fejl ved parser-test: {e}")
+        logging.critical(f"Fejl i parsing-test: {e}")
         logging.debug(traceback.format_exc())
-        con.rollback()
+        conn.rollback()
 
         
     finally:
-    cur.close()
-    conn.close()
+        try:
+            cur.close()
+            conn.close()
+        except:
+            pass
     
 
 if __name__ == "__main__":

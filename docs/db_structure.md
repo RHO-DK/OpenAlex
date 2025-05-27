@@ -61,7 +61,7 @@ Bemærk også primærnøgle:  (work_id, author_id)
 | cited_by_count     | INTEGER  | Antal gange værk er citeret (OpenAlex opgørelse)                                            |
 | is_oa              | BOOLEAN  | Open Access (`TRUE`/`FALSE`)                                                                |
 | oa_status          | TEXT     | 'gold', 'green', 'hybrid', 'closed'                                                         |
-| license            | TEXT     | Licens for open access, fx. 'cc-by'                                                         |
+| ~~license          | TEXT   | Licens for open access, fx. 'cc-by' ~~                                                        |
 | host_venue_name    | TEXT     | Udgiver/forlag/konference for udgivelse                                                     |
 | host_venue_issn    | TEXT     | ISSN (International Standard Serial Number) fx '1234-5678' unikt                            |
 | host_venue_ror     | TEXT     | ROR-ID for udgiverinstitution (kan være NULL) – valgfri fremmednøgle til 'institutions.ror' |
