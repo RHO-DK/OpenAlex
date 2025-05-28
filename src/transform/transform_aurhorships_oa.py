@@ -6,9 +6,8 @@ import psycopg2
 import os
 import sys
 
-# Tilføj src til importsti for config - password til db via venv før  kørsel
+# Tilføj src til importsti for config - password til db via venv før kørsel
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-#print("Looking for config in path:", os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "src")))
 
 
 from config import (
@@ -43,6 +42,24 @@ def connect_db():
         port=OA_DB_PORT
     )
     
+    
+        #     #--- Midlertidig reference tabel: authorships
+        
+        # try:
+        #     logging.info("Opretter authorships")
+
+        #     cur.execute("""
+        #     CREATE TABLE IF NOT EXISTS authorships (
+        #         work_id TEXT,
+        #         author_id TEXT,
+        #         institution_id TEXT,
+        #         author_position TEXT, 
+        #         is_corresponding BOOLEAN,
+        #         PRIMARY KEY (work_id, author_id)
+
+        #     );
+        #     """)
+    
 
 
 def parse_and_insert_works(filepath, failed_files):
@@ -63,7 +80,7 @@ def parse_and_insert_works(filepath, failed_files):
             # Eksklusionskritere: skip work hvis authorships er tom eller mangler
             if not work.get("authorships"):
                 skipped += 1
-                logging.info(f"Springer over work uden authorships: {strip_id(work.get('id'))}")
+                logging.info(f"Springer work over authorshipsliste tom: {strip_id(work.get('id'))}")
                 skipped_ids.append(strip_id(work.get("id")))
                 continue
             
