@@ -84,50 +84,44 @@ def parse_and_insert_works(filepath, failed_files):
                 skipped_ids.append(strip_id(work.get("id")))
                 continue
             
-            # fallback til kildeoplysninger (host_venue eller source via primary_location)
-            venue = work.get("host_venue") or work.get("primary_location", {}).get("source") or {}
 
-            doi = strip_id(work.get("doi"))
-            host_venue_name = venue.get("display_name")
-            host_venue_issn = venue.get("issn_l")
-            host_venue_ror = strip_id(venue.get("host_organization"))
-            
+
             
             try:
-                cur.execute("""
-                    INSERT INTO works (
-                        work_id, doi, title, publication_date, publication_year, type,
-                        language, cited_by_count, is_oa, oa_status,
-                        host_venue_name, host_venue_issn, host_venue_ror, created_date
-                    ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
-                    ON CONFLICT (work_id) DO NOTHING;
-                """, (
-                    strip_id(work.get("id")),
-                    doi,
-                    work.get("title"),
-                    work.get("publication_date"),
-                    work.get("publication_year"),
-                    work.get("type"),
-                    work.get("language"),
-                    work.get("cited_by_count"),
-                    work.get("open_access", {}).get("is_oa"),
-                    work.get("open_access", {}).get("oa_status"),
-                    host_venue_name,
-                    host_venue_issn,
-                    host_venue_ror,
-                    work.get("created_date")
-                ))
-                
-                if cur.rowcount == 1:
-                    conn.commit()
-                    inserted += 1
-                else:
-                    conn.commit()
-                    logging.info(f"Work {strip_id(work.get('id'))} blev ikke indsat (muligvis allerede eksisterende).")
+                for authorship in work.get("authorships", []):
                     
+                    # fallback for mulige entries - eller fravær i authorships- liste
+                    if "is_corresponding" in authorship:
+                        is_corresponding = authorship["is_corresponding"]
+                    elif "is_corresponding_author" in authorship:
+                        is_corresponding = authorship["is_corresponding_author"]
+                    else:
+                        is_corresponding = None
+                        
+                    cur.execute("""
+                        INSERT INTO authorships (
+                            work_id, author_id, institution_id, author_position, is_corresponding
+                        ) VALUES (%s, %s, %s, %s, %s)
+                        ON CONFLICT (work_id, author_id) DO NOTHING;
+                    """, (
+                        strip_id(work.get("id")),
+                        strip_id(authorship.get("author", {}).get("id")),
+                        strip_id(authorship.get("institutions", [{}])[0].get("id")) if authorship.get("institutions") else None,
+                        authorship.get("author_position"),
+                        is_corresponding
+                    ))
+                    
+                    if cur.rowcount == 1:
+                        #fjern ikke denne commit - så laves rollback og intet indsættes i db - se testlog 27.5.25
+                        conn.commit()
+                        inserted += 1
+                    else:
+                        conn.commit()
+                        logging.info(f"Work {strip_id(work.get('id'))} blev ikke indsat (muligvis allerede eksisterende).")
+                        
             except Exception as e:
                 conn.rollback()
-                logging.warning(f"Fejl ved parsing af work {work.get('id')}: {e}")
+                logging.warning(f"Fejl ved parsing af authorship {work.get('id')}: {e}")
                 logging.debug(traceback.format_exc())
                 
                 
@@ -137,8 +131,8 @@ def parse_and_insert_works(filepath, failed_files):
                     f.write(wid + "\n")
 
         
-        logging.info(f"Indsatte {inserted} værker fra {os.path.basename(filepath)}")
-        logging.info(f"Sprang {skipped} værker over (manglende authorships)")
+        logging.info(f"Indsatte {inserted} authorships fra {os.path.basename(filepath)}")
+        logging.info(f"Sprang {skipped} authorships over - tom liste")
 
         cur.close()
         conn.close()

@@ -141,30 +141,12 @@ def create_tables():
             conn.rollback 
             
             
-        
-        #--- authorships
-        
-        try:
-            logging.info("Opretter authorships")
-
-            cur.execute("""
-            CREATE TABLE IF NOT EXISTS authorships (
-                work_id TEXT,
-                author_id TEXT,
-                institution_id TEXT,
-                author_position TEXT, 
-                is_corresponding BOOLEAN,
-                PRIMARY KEY (work_id, author_id)
-
-            );
-            """)
-
             conn.commit()
         
             # log check
             logging.info("Tabel works oprettet")
             
-
+            
         except Exception as e:
             logging.error(f"Fejl ved oprettelse af tabel authorships: {e}")
             logging.debug(traceback.format_exc())
