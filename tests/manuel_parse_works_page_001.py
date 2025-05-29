@@ -1,4 +1,5 @@
-#### obs - helperfunkiton mangles - til strip af præfixer - placeres i utils navngives "strip_prefix"
+
+###___ Bruges til test af af filen  "forventet_fil.json" som er en kipi af  "works_page_001.json"___###
 
 import json
 import logging
@@ -129,5 +130,5 @@ def parse_and_insert_works(filepath):
     
 
 if __name__ == "__main__":
-    file_path = os.path.abspath(os.path.join("data", "raw", "works_page_001.json"))
+    file_path = os.path.abspath(os.path.join("tests", "raw", "forventet_fil.json"))
     parse_and_insert_works(file_path)

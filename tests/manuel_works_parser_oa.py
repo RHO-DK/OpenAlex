@@ -1,3 +1,4 @@
+###--- brugt til manuel validering af parsing proces ved særligt udfordrende elementer - filen "problemfil.json"
 
 import os
 import sys
@@ -8,7 +9,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "s
 from transform.transform_works_oa import parse_and_insert_works
 
 def test_parse_and_insert_valid_file():
-    testfile = os.path.join("tests", "data", "works_test_page.json")
+    testfile = os.path.join("tests", "problemfil.json")
     failed_files = []
     result = parse_and_insert_works(testfile, failed_files)
     assert result["inserted"] == 6
