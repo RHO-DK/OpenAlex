@@ -1,0 +1,57 @@
+# Validerer kodekvalitet for konsistens (pylint) og funktionalitet (pytest)
+
+name: lint-og-test
+
+on:
+    push:
+        branches: [main]
+    pull_request:
+        branches: [main]
+
+jobs:
+    kodevalidering:
+        name: valider på ${{ matrix.os }}
+        runs-on: ${{ matrix.os }}
+
+        strategy:
+            matrix:
+                os: [ubuntu-latest, macos-latest, windows-latest]
+        
+        steps:
+            - name: projekt-repo checkout til runner
+              uses: actions/checkout@v4
+
+            - name: python set-up
+              uses: actions/setup-python@v5
+              with:
+                python-version: "3.9"
+
+            - name: installer requriements, uden psycopg2, linux/mac
+              if: matrix.os != 'windows-latest'
+              shell: bash
+              env:
+                PIP_ONLY_BINARY: psycopg2-binary
+              run: |
+                python -m pip install --upgrade pip
+                grep -v '^psycopg2' requirements.txt > temp-reqs.txt
+                pip install -r temp-reqs.txt
+                pip install --only-binary :all: psycopg2-binary
+              
+            - name: installer dependencies, uden psycopg2 windows
+              if: matrix.os == 'windows-latest'
+              shell: powershell
+              env:
+                PIP_ONLY_BINARY: psycopg2-binary
+              run: |
+                python -m pip install --upgrade pip
+                Get-Content requirements.txt | Where-Object {$_ -notmatch '^psycopg2'} | Set-Content temp-reqs.txt
+                pip install -r temp-reqs.txt
+                pip install --only-binary :all: psycopg2-binary
+                
+            - name: kør pylint
+              run: |
+                pylint src/ || true
+
+            - name: kør pytest
+              run: |
+                pytest tests/

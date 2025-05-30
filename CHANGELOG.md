@@ -2,6 +2,25 @@
 
 Tilføjes med logikken: MAJOR.MINOR.PATCH (1.1.1), og dertil dato for ændring. 
 
+## [0.9.0] – 2025-05-29
+
+### Ændring:
+- Ny arbejdsform: CI-workflow via GitHub Actions - der arbejdes med kodevalidering
+  - Workflowfil `lint-og-test.yml` oprettet under `.github/workflows/`
+  - Validerer kodekvalitet med `pylint`
+  - Tester funktionalitet med `pytest` på testfiler (unittests)
+  - Kører ved `push` og `pull_request` til `main`
+- Eksisterende testfiler for parsing og instering til`works` anvendes fortsat og har fokus på datavalidering
+- Etableret klar adskillelse mellem automatiserede CI-tests og manuelle datavalideringstests
+  - CI-tests skal være uafhængige af database og ydre afhængigheder
+  - Parsertests med realdata udføres manuelt, dokumenteres i `TESTLOG.md`
+
+### Fremadrettet praksis:
+- Nye parserkomponenter opdeles i `parse_*` og `insert_*` - med henblik på automatiseret unittesting
+- `parse_*` skal være CI-testbare og rene for sideeffekter
+- `insert_*` holdes testbare via de etablerede manuelle datavalideringsprocedurer
+- `parse_and_insert_*` bruges kun som wrapper i `__main__`-konteksten
+
 
 ## [0.8.0] – 2025-05-27
 

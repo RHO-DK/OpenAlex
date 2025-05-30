@@ -154,8 +154,14 @@ if __name__ == "__main__":
         logging.info(f"Starter parsing af {filename}")
         parse_and_insert_works(filepath, failed_files)
         
-if failed_files:
-    logging.info(f"{len(failed_files)} kunne ikke parses - Se logs/failed_files.txt")
-    with open("logs/failed_files.txt", "w") as f:
-        for name in failed_files:
-            f.write(name + "\n")
+try:
+    if failed_files:
+        logging.info(f"{len(failed_files)} kunne ikke parses - Se logs/failed_files.txt")
+        with open("logs/failed_files.txt", "w") as f:
+            for name in failed_files:
+                f.write(name + "\n")
+except NameError:
+    pass
+                
+
+

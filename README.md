@@ -30,12 +30,35 @@ Levere output via flere værktøjer, for at vise overførbarhed af kompetencer -
   - 'report.Rmd': R-baseret rapport i markdown-format
   - Fokus på trends, netværk og beslutningsrelevante indsigter
 
+## Miljø og systemkrav
 
-## Miljø
 - Python-version: 3.9.6  
-- Virtuelt miljø: venv ('python3 -m venv openalex')
-- Pakkehåndtering: pip  
-- Krav: se 'requirements.txt'
+- Virtuelt miljø: `venv` (`python3 -m venv openalex`)
+- Pakkehåndtering: `pip`
+- Krav: se `requirements.txt`
+
+### PostgreSQL-afhængighed (`psycopg2`)
+Projektet kræver PostgreSQL og tilhørende udviklingsværktøjer, da `psycopg2` installeres fra kildekode.
+
+**Systemkrav for psycopg2-installation:**
+
+- **macOS:**
+  Installer PostgreSQL via Homebrew:  
+  `brew install postgresql`
+
+- **Ubuntu/Linux:**  
+  Installer nødvendige pakker:
+  `sudo apt install postgresql libpq-dev`
+
+- **Windows:**  
+  Installer PostgreSQL fra: https://www.postgresql.org/download/windows/
+  Husk at tilføje `pg_config.exe` til din system-PATH under installationen.
+
+### Alternativ
+Til lokal udvikling eller CI-test kan `psycopg2-binary` anvendes i stedet:
+```bash
+pip uninstall psycopg2
+pip install psycopg2-binary
 
 ## Datahåndtering
 

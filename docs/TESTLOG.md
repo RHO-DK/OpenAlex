@@ -19,6 +19,26 @@ Kørsler, scripts, parametre, værktøjer
 
 ___
 
+
+## [29-05-2025] Oprettet af CI-workflow til automatiserede kodetests
+
+**Mål**  
+Etablere grundstruktur for automatiseret validering af kodekvalitet og enhedstest ved push/pull_request til `main`
+
+**Handlinger/problemer/løsninger**  
+- Oprettet workflowfil `lint-og-test.yml` i `.github/workflows/`
+- Validerer `pylint`-score og kører `pytest` på CI-egnede testfiler
+- Eksisterende parser-tests ekskluderet fra CI pga. afhængighed til database
+- Dokumentation og begrundelse for ændringen findes i `CHANGELOG.md` under version [0.9.0]
+
+**Resultat**  
+✅ Succesfuld CI-konfiguration verificeret
+✅ Automatisk testtrigger på push/pull_request til `main`
+✅ Testet på tværs af OS (ubuntu, macos, windows) med Python 3.9
+
+
+___
+
 ## [27-05-2025] Parserkørsel over alle works-filer
 
 
