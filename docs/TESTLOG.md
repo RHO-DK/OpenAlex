@@ -33,8 +33,8 @@ Etablere grundstruktur for automatiseret validering af kodekvalitet og enhedstes
 
 **Resultat**  
 ✅ Succesfuld CI-konfiguration verificeret
-- Automatisk testtrigger på push/pull_request til `main`
-- Testet på tværs af OS (ubuntu, macos, windows) med Python 3.9
+✅ Automatisk testtrigger på push/pull_request til `main`
+✅ Testet på tværs af OS (ubuntu, macos, windows) med Python 3.9
 
 
 ___
